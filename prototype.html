@@ -1,0 +1,478 @@
+<title>Hold experience prototype</title>
+<style>
+  :root{
+    --page:#f2f2f4; --page-text:#1c1c1e; --page-muted:#6e6e73; --chip:#e4e4e8; --chip-active:#1c1c1e; --chip-active-text:#ffffff;
+    --bg:#0b0b0d; --card:#1c1c1e; --inset:#2c2c2e; --line:rgba(255,255,255,.08);
+    --tx:#ffffff; --tx2:#8e8e93; --tx3:#636366;
+    --blue:#3b82f6; --blue-tint:#1a2f4a; --blue-text:#8ab4f8; --green:#29cc88; --amber:#faaa00; --orange:#b45309; --purple:#7c32e5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --page:#111113; --page-text:#f2f2f4; --page-muted:#8e8e93; --chip:#242428; --chip-active:#f2f2f4; --chip-active-text:#111113; }
+  }
+  :root[data-theme="dark"]{ --page:#111113; --page-text:#f2f2f4; --page-muted:#8e8e93; --chip:#242428; --chip-active:#f2f2f4; --chip-active-text:#111113; }
+  :root[data-theme="light"]{ --page:#f2f2f4; --page-text:#1c1c1e; --page-muted:#6e6e73; --chip:#e4e4e8; --chip-active:#1c1c1e; --chip-active-text:#ffffff; }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--page);color:var(--page-text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px 48px}
+  .kicker{font-size:13px;color:var(--page-muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+  h1{font-size:19px;font-weight:600;margin-bottom:4px;text-align:center}
+  .sub{font-size:13px;color:var(--page-muted);margin-bottom:20px;text-align:center;max-width:440px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
+  .chips button{border:0;background:var(--chip);color:var(--page-text);font:inherit;font-size:12.5px;padding:7px 12px;border-radius:15px;cursor:pointer}
+  .chips button.on{background:var(--chip-active);color:var(--chip-active-text)}
+  .chips button:focus-visible,.phone button:focus-visible,.demo button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .phone{width:min(390px,100%);height:780px;background:var(--bg);border-radius:36px;box-shadow:0 0 0 8px #000, 0 24px 60px rgba(0,0,0,.35);overflow:hidden;position:relative;color:var(--tx)}
+  .screen{position:absolute;inset:0;display:none;flex-direction:column;overflow-y:auto;padding:22px 16px 110px;scrollbar-width:none}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin:4px 0 14px}
+  .avatar{width:48px;height:48px;border-radius:50%;background:#e9e9ec;position:relative;display:flex;align-items:center;justify-content:center}
+  .avatar::before{content:"";width:22px;height:22px;border-radius:50%;background:#b8b8bf;position:absolute;top:8px}
+  .avatar::after{content:"";width:34px;height:20px;border-radius:17px 17px 0 0;background:#b8b8bf;position:absolute;bottom:0}
+  .laurel{position:absolute;inset:-6px;border-radius:50%;border:5px solid transparent;border-left-color:#3aa655;border-right-color:#3aa655;transform:rotate(20deg)}
+  .scan{width:48px;height:48px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center}
+  .scan i{width:18px;height:18px;border:2px solid var(--tx);border-radius:4px;display:block;position:relative}
+  .scan i::after{content:"";position:absolute;inset:4px;border:2px solid var(--tx);border-radius:1px}
+  .promo{background:var(--blue-tint);border-radius:22px;padding:22px 20px 20px;text-align:center;margin-top:8px}
+  .promo .pt{font-size:22px;font-weight:700;color:var(--blue-text)}
+  .promo .pc{font-size:14.5px;color:var(--blue-text);line-height:1.5;margin:6px 0 16px;opacity:.9}
+  .hero{background:var(--blue-tint);border-radius:22px;padding:20px 18px 18px;margin-top:8px}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .hero-name{font-size:20px;font-weight:700;color:var(--blue-text);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .hero-iban{font-size:13px;color:var(--blue-text);opacity:.8;margin-top:6px}
+  .hero-bal{text-align:right;flex:none}
+  .hero-amt{font-size:32px;font-weight:700;color:var(--tx);font-variant-numeric:tabular-nums;display:block;line-height:1}
+  .hero-amt small{font-size:18px}
+  .hero-lbl{font-size:13px;color:var(--blue-text);display:block;margin-top:6px}
+  .hero-actions{display:flex;gap:10px;margin-top:18px}
+  .hbtn{border:0;background:rgba(255,255,255,.12);color:var(--tx);font:inherit;font-size:14.5px;font-weight:600;padding:11px 16px;border-radius:22px;cursor:pointer;display:flex;align-items:center;gap:8px}
+  .hb-ic{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.18);display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+  .hb-more{margin-left:auto;padding:11px 14px;letter-spacing:1px}
+  .sec{display:flex;justify-content:space-between;align-items:center;font-size:17px;font-weight:700;margin-bottom:14px}
+  .sec-r{color:var(--blue);font-size:15px;letter-spacing:1px}
+  .tile{width:42px;height:42px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
+  .amt small{font-size:.72em}
+  .tabbar{position:absolute;left:14px;right:14px;bottom:14px;height:74px;background:var(--card);border-radius:37px;display:flex;justify-content:space-around;align-items:center;padding:0 6px;z-index:4}
+  .tab{background:none;border:0;color:#d1d1d6;font:inherit;font-size:11px;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:4px;width:64px;height:64px;justify-content:center;border-radius:32px;cursor:pointer}
+  .tab svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .tab.on{background:var(--inset);color:var(--blue)}
+  .screen::-webkit-scrollbar{display:none}
+  .screen.show{display:flex}
+  @media (prefers-reduced-motion: no-preference){ .screen.show{animation:in .18s ease} @keyframes in{from{opacity:.4;transform:translateX(14px)}to{opacity:1;transform:none}} }
+  .sbar{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;padding:0 6px;margin-bottom:14px}
+  .batt{width:24px;height:12px;border-radius:4px;background:rgba(255,255,255,.55)}
+  .nav{display:flex;align-items:center;gap:10px;margin-bottom:10px;min-height:24px}
+  .back{background:none;border:0;color:var(--tx);font-size:20px;line-height:1;cursor:pointer;padding:2px 8px 4px 2px}
+  .h{font-size:27px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;line-height:1.2}
+  .cap{font-size:14px;color:var(--tx2);line-height:1.55}
+  .card{background:var(--card);border-radius:16px;padding:18px;margin-top:14px}
+  .row{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:0;color:var(--tx);font:inherit;padding:0;cursor:pointer}
+  .row+.row{margin-top:16px}
+  .rt{font-size:16px;font-weight:600;line-height:1.35}
+  .rc{font-size:13.5px;color:var(--tx2);margin-top:2px;line-height:1.45}
+  .grow{flex:1;min-width:0}
+  .dot{width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+  .done{background:var(--green);color:#fff}
+  .cur{border:2px solid var(--blue)}
+  .cur i{width:9px;height:9px;border-radius:50%;background:var(--blue)}
+  .ahead{border:2px solid var(--inset)}
+  .pill{display:block;width:100%;border:0;border-radius:26px;background:var(--blue);color:#fff;font:inherit;font-size:16px;font-weight:700;padding:16px;margin-top:16px;cursor:pointer;text-align:center}
+  .pill:disabled{opacity:.45;cursor:default}
+  .tag{font-size:11.5px;font-weight:700;letter-spacing:.05em;padding:3px 8px;border-radius:9px;display:inline-block}
+  .tag.rev{background:rgba(250,170,0,.16);color:var(--amber)}
+  .glabel{font-size:12.5px;font-weight:700;letter-spacing:.05em}
+  .g-green{color:var(--green)} .g-amber{color:var(--amber)}
+  .inset{background:var(--inset);border-radius:12px;padding:14px;margin-top:12px;font-size:13.5px;color:var(--tx2);line-height:1.55}
+  .amt{font-variant-numeric:tabular-nums;font-weight:700}
+  .hr{height:1px;background:var(--line);margin:16px 0}
+  .big{font-size:22px;font-weight:700;margin:2px 0}
+  .qa{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
+  .qa button{border:0;border-radius:18px;color:#fff;font:inherit;font-size:14px;font-weight:600;padding:16px 8px;cursor:pointer}
+  .contacts{display:flex;gap:14px;margin-top:14px}
+  .contact{background:none;border:0;color:var(--tx);font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px}
+  .ava{width:52px;height:52px;border-radius:50%;background:var(--inset);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;border:2.5px solid transparent}
+  .contact.sel .ava{border-color:var(--blue)}
+  .amount{font-size:44px;font-weight:700;text-align:center;margin:22px 0 6px;font-variant-numeric:tabular-nums}
+  .kb{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+  .kb button{border:0;border-radius:14px;background:var(--card);color:var(--tx);font:inherit;font-size:20px;font-weight:600;padding:14px;cursor:pointer}
+  .more{background:none;border:0;color:var(--blue);font:inherit;font-size:15px;font-weight:600;padding:14px;cursor:pointer;text-align:center;margin-top:14px;width:100%}
+  .steps{display:flex;align-items:center;gap:6px;margin:12px 0 2px}
+  .steps i{width:8px;height:8px;border-radius:50%;background:var(--inset);display:block}
+  .steps i.on{background:var(--blue)}
+  .steps i.did{background:var(--green)}
+  .steps span{font-size:12.5px;color:var(--tx2);margin-left:6px}
+  .bigcheck{width:64px;height:64px;border-radius:50%;background:var(--green);color:#fff;font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:18px 0 14px}
+  .toast{position:absolute;left:16px;right:16px;bottom:24px;background:var(--green);color:#fff;border-radius:14px;padding:14px;font-size:14.5px;font-weight:600;text-align:center;display:none;z-index:6}
+  .toast.show{display:block}
+  .toast.plain{background:var(--inset);color:var(--tx)}
+  .sheet{position:absolute;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;z-index:5}
+  .sheet.show{display:flex}
+  .sheet>div{background:var(--card);border-radius:24px 24px 0 0;padding:22px 18px 26px;width:100%}
+  .demo{display:flex;gap:10px;margin-top:18px}
+  .demo button{border:0;background:var(--chip);color:var(--page-text);font:inherit;font-size:13px;font-weight:600;padding:10px 16px;border-radius:18px;cursor:pointer}
+  .note{margin-top:16px;font-size:11.5px;color:var(--page-muted);text-align:center;max-width:390px}
+</style><style>
+  body.embed{padding:0;background:transparent;min-height:0}
+  body.embed .kicker,body.embed h1,body.embed .sub,body.embed .note{display:none}
+  body.embed .chips{margin-bottom:14px}
+  body.embed .demo{margin-top:14px}
+</style>
+<script>if(location.search.indexOf('embed')>-1){document.documentElement.classList.add('embed');document.addEventListener('DOMContentLoaded',function(){document.body.classList.add('embed')});}</script>
+
+<div class="kicker">Spec redesign concept · not affiliated with bunq</div>
+<h1>The hold experience, start to finish</h1>
+<p class="sub">Something is up with this account, but you don't know it yet. Pay Amara like on any day, then follow the steps all the way to the end.</p>
+<div class="chips" id="chips"></div>
+
+<div class="phone" id="phone">
+
+  <div class="screen" id="home" data-name="Home">
+    <div class="sbar"><span>10:56</span><span class="batt"></span></div>
+    <div class="topbar">
+      <div class="avatar" aria-label="Profile"><span class="laurel"></span></div>
+      <div class="scan" aria-label="Scan QR"><i></i></div>
+    </div>
+    <div class="h" style="font-size:36px">Home</div>
+
+    <div class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="hero-name">Personal <span class="tag rev" id="badge">Being checked</span></div>
+          <div class="hero-iban">NL15 BUNQ 2100 0752 09</div>
+        </div>
+        <div class="hero-bal"><span class="hero-amt">€450<small>.00</small></span><span class="hero-lbl">Balance</span></div>
+      </div>
+      <div class="hero-actions">
+        <button class="hbtn" onclick="go('send')"><span class="hb-ic">↑</span>Send</button>
+        <button class="hbtn"><span class="hb-ic">+</span>Add money</button>
+        <button class="hbtn hb-more" aria-label="More">•••</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec"><span>Activity</span><span class="sec-r">•••</span></div>
+      <div class="row" style="cursor:default"><span class="tile" style="background:#1d3b2a;color:var(--green)">☕</span><span class="grow"><span class="rt">Coffeecompany</span><span class="rc" style="display:block">Card payment</span></span><span class="amt">−4.<small>50</small></span></div>
+      <div class="hr"></div>
+      <div class="row" style="cursor:default"><span class="tile" style="background:#2b2340;color:#c4a7ff">A</span><span class="grow"><span class="rt">Amara</span><span class="rc" style="display:block">Received</span></span><span class="amt" style="color:var(--green)">+25.<small>00</small></span></div>
+      <div class="hr"></div>
+      <div class="row" style="cursor:default"><span class="tile" style="background:#3a2a1a;color:#ffb366">▲</span><span class="grow"><span class="rt">Interest</span><span class="rc" style="display:block">Savings</span></span><span class="amt" style="color:var(--green)">+0.<small>22</small></span></div>
+      <button class="more" style="text-align:left;padding:14px 0 0;margin:0">See all</button>
+    </div>
+
+    <div class="card">
+      <div class="sec"><span>Bank accounts</span><span class="sec-r">•••</span></div>
+      <div class="row" style="cursor:default"><span class="tile" style="background:#183a5c;color:var(--blue-text)">◉</span><span class="grow"><span class="rt">Joint</span><span class="rc" style="display:block">NL16 BUNQ 2100 0653 94</span></span><span class="amt">€200.<small>00</small></span></div>
+      <div class="hr"></div>
+      <div class="row" style="cursor:default"><span class="tile" style="background:#1d3b2a;color:var(--green)">◎</span><span class="grow"><span class="rt">Savings</span><span class="rc" style="display:block">2.01% interest</span></span><span class="amt">€909.<small>76</small></span></div>
+    </div>
+  </div>
+
+  <div class="screen" id="send" data-name="Pay">
+    <div class="sbar"><span>9:41</span><span class="batt"></span></div>
+    <div class="nav"><button class="back" onclick="go('home')" aria-label="Back">‹</button></div>
+    <div class="h">Send money</div>
+    <div class="cap">From Personal · €450.00</div>
+    <div class="contacts" id="contacts">
+      <button class="contact sel" data-n="Amara"><span class="ava">A</span>Amara</button>
+      <button class="contact" data-n="Mick"><span class="ava">M</span>Mick</button>
+      <button class="contact" data-n="Sofia"><span class="ava">S</span>Sofia</button>
+    </div>
+    <div class="amount" id="amt-view">€0</div>
+    <div class="cap" style="text-align:center" id="amt-hint">Type an amount</div>
+    <div class="kb" id="kb"></div>
+    <button class="pill" id="send-btn" onclick="trySend()" disabled>Send</button>
+  </div>
+
+  <div class="screen" id="hub" data-name="Your case">
+    <div class="sbar"><span>9:41</span><span class="batt"></span></div>
+    <div class="nav"><button class="back" onclick="go('home')" aria-label="Back">‹</button></div>
+
+    <div id="hub-papers">
+      <div class="steps"><i class="on"></i><i></i><i></i><span>Step 1 of 3</span></div>
+      <div class="h">Send us your papers</div>
+      <div class="cap" id="papers-count">None are in yet. We need 3. The check starts the moment the last one arrives.</div>
+      <button class="pill" onclick="go('docs')">Add your papers</button>
+      <div class="cap" style="margin-top:16px;text-align:center;font-size:13px">Next update: tomorrow by 17:00.<br>We tell you something every day, even if it's "no news yet".</div>
+      <button class="more" onclick="go('limits')">Is my money safe? ›</button>
+    </div>
+
+    <div id="hub-checking" style="display:none">
+      <div class="steps"><i class="did"></i><i class="on"></i><i></i><span>Step 2 of 3</span></div>
+      <div class="h">We're checking your papers</div>
+      <div class="cap">All 3 are in. Nothing more is needed from you.</div>
+      <div class="card">
+        <div class="cap">We finish our part by</div>
+        <div class="big">Friday, 17:00</div>
+        <div class="cap" id="check-day">That's our deadline, and we've kept 2 of 2 on your case so far.</div>
+      </div>
+      <div class="cap" style="margin-top:16px;text-align:center;font-size:13px">Next update: tomorrow by 17:00.<br>We tell you something every day, even if it's "no news yet".</div>
+      <button class="more" onclick="go('deadline')">What if Friday passes? ›</button>
+    </div>
+
+    <div id="hub-waiting" style="display:none">
+      <div class="steps"><i class="did"></i><i class="did"></i><i class="on"></i><span>Step 3 of 3</span></div>
+      <div class="h">Our part is done. Now we wait for someone else.</div>
+      <div class="cap">Our check finished on time. But the law says an outside authority gets a few days to look too. We can't release money until they're done, and we can't tell you what they're looking at.</div>
+      <div class="card">
+        <div class="cap">They have until</div>
+        <div class="big">Wednesday, 17:00</div>
+        <div class="cap">By law, up to 5 working days. If they say nothing by then, everything opens up on its own.</div>
+      </div>
+      <div class="card">
+        <div class="glabel g-green">WE WERE LATE, SO THIS ALREADY HAPPENED</div>
+        <div class="row" style="cursor:default;margin-top:12px"><span class="dot done">✓</span><span class="grow"><span class="rt">Your daily card limit is now €500</span><span class="rc" style="display:block">That one is ours to change, so we did</span></span></div>
+        <div class="row" style="cursor:default"><span class="dot" style="background:rgba(250,170,0,.16);color:var(--amber)">❚❚</span><span class="grow"><span class="rt">Sending money stays paused</span><span class="rc" style="display:block">That one isn't ours to change while they're looking</span></span></div>
+      </div>
+      <div class="cap" style="margin-top:16px;text-align:center;font-size:13px">Next update: tomorrow by 17:00.<br>Even now, we tell you something every day.</div>
+    </div>
+
+    <div id="hub-clear" style="display:none">
+      <div class="bigcheck">✓</div>
+      <div class="h">All clear</div>
+      <div class="cap">The check is done and everything is back to normal. Sending, cash, all of it. Thanks for bearing with us.</div>
+      <button class="pill" onclick="go('send')">Send Amara her €400</button>
+      <div class="cap" style="margin-top:16px;text-align:center;font-size:13px">It'll go through this time. That's the point.</div>
+    </div>
+  </div>
+
+  <div class="screen" id="docs" data-name="Documents">
+    <div class="sbar"><span>9:41</span><span class="batt"></span></div>
+    <div class="nav"><button class="back" onclick="go('hub')" aria-label="Back">‹</button></div>
+    <div class="h" id="docs-h">3 things we need</div>
+    <div class="cap" id="docs-cap">A photo or a file, whatever you have. Add them in any order.</div>
+    <div class="card" id="docs-list"></div>
+    <div class="cap" style="margin-top:12px">Can't get one of these? Tell us. A person will look at what you can get instead.</div>
+  </div>
+
+  <div class="screen" id="limits" data-name="Limits">
+    <div class="sbar"><span>9:41</span><span class="batt"></span></div>
+    <div class="nav"><button class="back" onclick="go('hub')" aria-label="Back">‹</button></div>
+    <div class="h">What still works</div>
+    <div class="cap" id="limits-cap">Your money is safe. Everything goes back to normal when the check ends.</div>
+    <div class="card">
+      <div class="glabel g-green">WORKS AS NORMAL</div>
+      <div class="row" style="cursor:default;margin-top:14px"><span class="dot done">✓</span><span class="grow"><span class="rt">Rent, salary, and planned payments</span></span></div>
+      <div class="row" style="cursor:default"><span class="dot done">✓</span><span class="grow"><span class="rt" id="limits-card-line">Paying and sending, up to €250 a day</span></span></div>
+      <div class="row" style="cursor:default"><span class="dot done">✓</span><span class="grow"><span class="rt">Money coming in</span></span></div>
+    </div>
+    <div class="card" id="limits-paused">
+      <div class="glabel g-amber">PAUSED UNTIL THE CHECK ENDS</div>
+      <div class="row" style="cursor:default;margin-top:14px"><span class="dot" style="background:rgba(250,170,0,.16);color:var(--amber)">❚❚</span><span class="grow"><span class="rt">Sending more than €250 a day</span></span></div>
+      <div class="row" style="cursor:default"><span class="dot" style="background:rgba(250,170,0,.16);color:var(--amber)">❚❚</span><span class="grow"><span class="rt">Taking out cash</span></span></div>
+    </div>
+    <button class="more" onclick="go('why')">Why is this happening? ›</button>
+  </div>
+
+  <div class="screen" id="why" data-name="Why">
+    <div class="sbar"><span>9:41</span><span class="batt"></span></div>
+    <div class="nav"><button class="back" onclick="go('hub')" aria-label="Back">‹</button></div>
+    <div class="h">Why does this happen?</div>
+    <div class="cap">The law tells every bank to check accounts sometimes. Yours came up. Nothing is wrong with you or your money.</div>
+    <div class="card">
+      <div class="rt" style="margin-bottom:12px">We can always tell you</div>
+      <div class="rc" style="color:var(--tx);font-size:15px">✓&nbsp; Where your check is</div>
+      <div class="rc" style="color:var(--tx);font-size:15px;margin-top:10px">✓&nbsp; How long it usually takes</div>
+      <div class="rc" style="color:var(--tx);font-size:15px;margin-top:10px">✓&nbsp; What speeds it up</div>
+      <div class="rc" style="color:var(--tx);font-size:15px;margin-top:10px">✓&nbsp; When you'll hear from us</div>
+    </div>
+    <div class="card">
+      <div class="rt" style="margin-bottom:12px">One thing we can't tell you</div>
+      <div class="rc" style="color:var(--tx);font-size:15px">🔒&nbsp; What started the check</div>
+      <div class="inset">The law forbids every bank from saying, so no bank can. Everything else stays open, and the check ends either way.</div>
+    </div>
+    <button class="more" onclick="go('deadline')">When does this end? ›</button>
+  </div>
+
+  <div class="screen" id="deadline" data-name="Deadlines">
+    <div class="sbar"><span>9:41</span><span class="batt"></span></div>
+    <div class="nav"><button class="back" onclick="go('hub')" aria-label="Back">‹</button></div>
+    <div class="h">Our deadline</div>
+    <div class="card" id="dl-card">
+      <div class="cap" id="dl-cap">Once your last paper is in, we finish our part by</div>
+      <div class="big" id="dl-when">Friday, 17:00</div>
+      <div class="cap" id="dl-state">On track. We've kept 2 out of 2 deadlines on your case so far.</div>
+    </div>
+    <div class="card">
+      <div class="rt" style="margin-bottom:12px">If we're late, we make it up to you</div>
+      <div class="rc" style="color:var(--tx);font-size:15px">1&nbsp;&nbsp;Your daily card limit rises to <span class="amt">€500</span></div>
+      <div class="rc" style="color:var(--tx);font-size:15px;margin-top:10px">2&nbsp;&nbsp;Your case goes first in line</div>
+      <div class="rc" style="color:var(--tx);font-size:15px;margin-top:10px">3&nbsp;&nbsp;You see it happen right here</div>
+      <div class="inset">All of it happens by itself. You never have to call or ask.</div>
+    </div>
+    <div class="cap" style="margin-top:14px;font-size:13px">Sometimes the law makes us wait for an outside authority. If that happens, we can't release money early, but we still tell you the same day, and the daily updates keep coming.</div>
+  </div>
+
+  <div class="sheet" id="sheet" role="dialog" aria-label="Payment paused">
+    <div>
+      <div class="rt" style="font-size:18px">This payment can't go yet</div>
+      <div class="rc" style="margin-top:8px;font-size:14px" id="sheet-body"></div>
+      <button class="pill" onclick="sheet(false);go('hub')">See what's happening</button>
+      <button class="pill" style="background:var(--inset);color:var(--tx)" onclick="sheet(false)">Okay</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <nav class="tabbar" aria-label="Main">
+    <button class="tab on" onclick="go('home')" aria-label="Home"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M10 20v-5h4v5"/></svg>Home</button>
+    <button class="tab" aria-label="Cards"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="10" height="18" rx="2"/><path d="M4 8h10M4 16h10"/></svg>Cards</button>
+    <button class="tab" aria-label="Savings"><svg viewBox="0 0 24 24"><path d="M5 12c0-3.3 2.9-6 6.5-6h2c3 0 5.5 2.2 5.5 5v1.5l2 .5v3l-2 .5-.5 2h-3l-.5-1.5h-4L10.5 19h-3v-3.5C6 14.7 5 13.4 5 12z"/><circle cx="15.5" cy="10.5" r=".6"/><path d="M4 12h1"/></svg>Savings</button>
+    <button class="tab" aria-label="Stocks"><svg viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M6 17v-4M10 17V9M14 17v-6M18 17V6"/><path d="M4 8l4-3 4 2 5-4"/></svg>Stocks</button>
+    <button class="tab" aria-label="Crypto"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"/><path d="M10 8h3a1.8 1.8 0 010 3.6h-3zM10 11.6h3.4a1.8 1.8 0 010 3.6H10z"/><path d="M11 6.5v1.5M11 15.2v1.6"/></svg>Crypto</button>
+  </nav>
+</div>
+
+<div class="demo">
+  <button onclick="skipDay()">⏩ Skip a day</button>
+  <button onclick="outsideHold()">⚖️ Law extends the hold</button>
+  <button onclick="resetDemo()">↺ Restart</button>
+</div>
+<p class="note">The full journey: papers in one by one → check starts → daily updates → all clear, and the €400 finally goes through. Production uses DM Sans and live case state.</p>
+
+<script>
+  var order=['home','send','hub','docs','limits','why','deadline'];
+  var chips=document.getElementById('chips');
+  order.forEach(function(id){
+    var s=document.getElementById(id);
+    var b=document.createElement('button');
+    b.textContent=s.dataset.name;
+    b.onclick=function(){go(id)};
+    b.id='chip-'+id;
+    chips.appendChild(b);
+  });
+  function go(id){
+    order.forEach(function(k){
+      document.getElementById(k).classList.toggle('show',k===id);
+      document.getElementById('chip-'+k).classList.toggle('on',k===id);
+    });
+    document.getElementById(id).scrollTop=0;
+  }
+  function sheet(on){ document.getElementById('sheet').classList.toggle('show',on); }
+  function toast(msg,plain){
+    var t=document.getElementById('toast');
+    t.textContent=msg;
+    t.classList.toggle('plain',!!plain);
+    t.classList.add('show');
+    clearTimeout(t._tm);
+    t._tm=setTimeout(function(){t.classList.remove('show')},2200);
+  }
+
+  var DOCS=[
+    {name:'Invoices you sent to clients', hint:'2 or 3 from this year'},
+    {name:'A statement from your old bank', hint:'Any month works'},
+    {name:'Proof your business is registered', hint:'A photo of it is fine'}
+  ];
+  var docsIn, phase, day, who, amt;
+
+  function resetDemo(){
+    docsIn=[false,false,false]; phase='papers'; day=0; amt=0; who='Amara';
+    document.querySelectorAll('.contact').forEach(function(c,i){c.classList.toggle('sel',i===0)});
+    renderAll(); renderAmt(); go('home');
+  }
+
+  function addDoc(i){
+    docsIn[i]=true;
+    var n=docsIn.filter(Boolean).length;
+    if(n<3){ toast('Added ✓ '+(3-n)+' to go'); }
+    else { phase='checking'; toast('All papers in. The check has started.'); setTimeout(function(){go('hub')},900); }
+    renderAll();
+  }
+
+  function skipDay(){
+    if(phase==='papers'){ toast('Daily update: we still need '+(3-docsIn.filter(Boolean).length)+' paper(s) from you.',true); return; }
+    if(phase==='checking'){
+      day++;
+      if(day===1){ toast('Daily update: no news yet. Still on track for Friday.',true); document.getElementById('check-day').textContent='Thursday: no news yet, and still on track. We said we’d tell you either way.'; }
+      else { phase='clear'; renderAll(); toast('Good news. You’re all clear.'); go('hub'); }
+      return;
+    }
+    if(phase==='waiting'){
+      day++;
+      if(day<4){ toast('Daily update: still with the outside authority. Nothing changed. Still telling you.',true); }
+      else { phase='clear'; renderAll(); toast('They said nothing by the deadline. Everything is open again.'); go('hub'); }
+      return;
+    }
+    toast('The case is closed. Tap Restart to run it again.',true);
+  }
+
+  function outsideHold(){
+    if(phase!=='checking'){ toast('First add all 3 papers, so the check has started.',true); return; }
+    phase='waiting'; day=0; renderAll();
+    toast('Our part finished on time. Now the law adds a wait.',true);
+    go('hub');
+  }
+
+  function renderAll(){
+    document.getElementById('badge').style.display = phase==='clear' ? 'none' : 'inline-block';
+    document.getElementById('hub-papers').style.display = phase==='papers' ? 'block' : 'none';
+    document.getElementById('hub-checking').style.display = phase==='checking' ? 'block' : 'none';
+    document.getElementById('hub-waiting').style.display = phase==='waiting' ? 'block' : 'none';
+    document.getElementById('hub-clear').style.display = phase==='clear' ? 'block' : 'none';
+    var n=docsIn.filter(Boolean).length;
+    document.getElementById('papers-count').textContent = (n===0 ? 'None are in yet. We need 3.' : n+' of 3 are in. '+(3-n)+' to go.') + ' The check starts the moment the last one arrives.';
+    var list=document.getElementById('docs-list');
+    list.innerHTML='';
+    DOCS.forEach(function(d,i){
+      var row=document.createElement('div');
+      row.className='row'; row.style.cursor='default';
+      if(i>0){ var hr=document.createElement('div'); hr.className='hr'; list.appendChild(hr); }
+      var dot=document.createElement('span');
+      dot.className='dot '+(docsIn[i]?'done':'cur');
+      dot.innerHTML=docsIn[i]?'✓':'<i></i>';
+      var g=document.createElement('span'); g.className='grow';
+      g.innerHTML='<span class="rt"'+(docsIn[i]?'':'')+'>'+d.name+'</span><span class="rc" style="display:block">'+(docsIn[i]?'Done. Thank you.':d.hint)+'</span>';
+      row.appendChild(dot); row.appendChild(g);
+      if(!docsIn[i] && phase==='papers'){
+        var b=document.createElement('button');
+        b.className='tag'; b.style.background='var(--blue)'; b.style.color='#fff'; b.style.border='0'; b.style.cursor='pointer'; b.style.font='inherit';
+        b.textContent='Add'; b.onclick=function(){addDoc(i)};
+        row.appendChild(b);
+      }
+      list.appendChild(row);
+    });
+    document.getElementById('docs-h').textContent = phase==='papers' ? (n===0?'3 things we need':(3-n)+' to go') : 'All papers in';
+    document.getElementById('docs-cap').textContent = phase==='papers' ? 'A photo or a file, whatever you have. Add them in any order.' : 'Nothing more is needed from you.';
+    var over=phase==='clear', waiting=phase==='waiting';
+    document.getElementById('limits-paused').style.display = over ? 'none' : 'block';
+    document.getElementById('limits-cap').textContent = over ? 'The check is over. Everything is back to normal.' : waiting ? 'Your money is safe. Card spending is up to €500 a day now. Sending stays paused until the outside authority is done.' : 'Your money is safe. Everything goes back to normal when the check ends.';
+    document.getElementById('limits-card-line').textContent = over ? 'Paying and sending, no limits' : waiting ? 'Paying by card, up to €500 a day' : 'Paying and sending, up to €250 a day';
+    document.getElementById('dl-cap').textContent = phase==='papers' ? 'Once your last paper is in, we finish our part by' : waiting ? 'Our part: done. Their part, by law, ends by' : 'We finish our part by';
+    document.getElementById('dl-when').textContent = over ? 'Kept: Friday, 17:00 ✓' : waiting ? 'Wednesday, 17:00' : 'Friday, 17:00';
+    document.getElementById('dl-state').textContent = over ? 'Done a day early. 3 of 3 deadlines kept on your case.' : waiting ? 'We were 2 hours late on ours, so your card limit already rose to €500. Money release waits for them, not us.' : 'On track. We’ve kept 2 out of 2 deadlines on your case so far.';
+  }
+
+  document.getElementById('contacts').addEventListener('click',function(e){
+    var b=e.target.closest('.contact'); if(!b) return;
+    document.querySelectorAll('.contact').forEach(function(c){c.classList.toggle('sel',c===b)});
+    who=b.dataset.n;
+  });
+
+  var kb=document.getElementById('kb');
+  ['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(function(k){
+    var b=document.createElement('button');
+    b.textContent=k;
+    if(k==='') b.disabled=true, b.style.visibility='hidden';
+    if(k==='⌫') b.setAttribute('aria-label','Delete');
+    b.onclick=function(){
+      if(k==='⌫') amt=Math.floor(amt/10);
+      else if(amt<10000) amt=amt*10+Number(k);
+      renderAmt();
+    };
+    kb.appendChild(b);
+  });
+  function renderAmt(){
+    document.getElementById('amt-view').textContent='€'+amt;
+    document.getElementById('amt-hint').textContent=amt>0?'To '+who+', right away':'Type an amount';
+    document.getElementById('send-btn').disabled=amt<1;
+  }
+  function trySend(){
+    if(phase!=='clear' && amt>250){
+      document.getElementById('sheet-body').textContent = phase==='waiting'
+        ? 'Sending is paused while an outside authority looks at your account. That part isn’t ours to change, even though we were late. Card spending is up to €500 a day. They have until Wednesday, 17:00.'
+        : 'While we check your account, you can send up to €250 a day. This one is €'+amt+'. Everything goes back to normal when the check ends.';
+      sheet(true);
+    } else {
+      toast('Sent €'+amt+' to '+who+' ✓');
+      amt=0; renderAmt();
+    }
+  }
+
+  resetDemo();
+</script>
