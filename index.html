@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>On Hold</title>
-<meta name="description" content="A spec redesign of the account review experience, built for bunq. Interactive prototype, evidence from 74 public complaints, and a five-screen architecture.">
+<meta name="description" content="A spec redesign of the account review experience, built for bunq. A narrated walkthrough, evidence from 74 public complaints, and a five-screen architecture.">
 <meta property="og:title" content="On Hold: designing the moment neobanks lose trust">
-<meta property="og:description" content="A spec redesign of the account review experience, built for bunq. Try the prototype.">
+<meta property="og:description" content="A spec redesign of the account review experience, built for bunq. Watch the walkthrough.">
 <meta property="og:type" content="article">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,9 +43,6 @@
   h3{font-size:19px;font-weight:700;margin:28px 0 8px}
   p{margin-bottom:16px;max-width:65ch}
   p:last-child{margin-bottom:0}
-  .demo-shell{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:28px 20px 22px;margin:28px auto 0}
-  .demo-shell iframe{display:block;width:100%;height:1010px;border:0;border-radius:18px;background:transparent}
-  .demo-note{font-size:14px;color:var(--tx3);text-align:center;margin-top:16px}
   video{display:block;width:100%;border-radius:20px;background:#000;margin-top:24px}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 8px}
   .stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px}
@@ -92,7 +89,6 @@
     .bar{grid-template-columns:1fr;gap:6px}
     .bar .lbl{text-align:left}
     .legal li{grid-template-columns:1fr;gap:6px}
-    .demo-shell iframe{height:960px}
     .ia .rooms{grid-template-columns:1fr 1fr}
     .ia .drops{display:none}
     .ia .h{display:none}
@@ -104,30 +100,17 @@
 <header class="wrap">
   <div class="kicker">Spec redesign · not affiliated with bunq</div>
   <h1>On Hold: designing the moment neobanks lose trust</h1>
-  <p class="lede">Every neobank freezes accounts. The law requires it. What no bank has designed is <b>everything around the freeze</b>: what the person is told, when, and what still works. This is a working redesign of that experience, built in bunq's own design language, from 74 public complaints.</p>
-  <div class="meta"><span><b>Interactive prototype</b> below</span><span><b>4-minute walkthrough</b> with narration</span><span><b>Evidence:</b> 74 coded complaints</span></div>
+  <p class="lede">Every neobank freezes accounts. The law requires it. What no bank has designed is <b>everything around the freeze</b>: what the person is told, when, and what still works. This is a working redesign of that experience, built in bunq's own design language, from 74 public complaints, and walked through screen by screen below.</p>
+  <div class="meta"><span><b>Narrated walkthrough</b> below, 4:30</span><span><b>Evidence:</b> 74 coded complaints</span><span><b>Built</b> in bunq’s own design language</span></div>
 </header>
-
-<section id="prototype">
-  <div class="wrap">
-    <h2>Try it. Something is up with this account, but you don't know it yet.</h2>
-    <p>Send Amara €400 the way you would on any day, then follow your nose. Use the controls under the phone to move the case forward a day, or to see what happens when the law extends a hold.</p>
-  </div>
-  <div class="wide">
-    <div class="demo-shell">
-      <iframe src="prototype.html?embed" title="Interactive prototype of the hold experience" loading="lazy"></iframe>
-      <div class="demo-note">Prefer it full-screen? <a href="prototype.html">Open the prototype on its own page</a>.</div>
-    </div>
-  </div>
-</section>
 
 <section id="video">
   <div class="wrap">
-    <h2>Or watch the whole thing in four minutes</h2>
-    <p>Why the problem exists, the journey start to finish, and the architecture underneath it.</p>
+    <h2>Watch it, start to finish, in four and a half minutes</h2>
+    <p>Why the problem exists, the journey tapped through screen by screen, what happens when the law extends a hold, and the architecture underneath it all.</p>
   </div>
   <div class="wide">
-    <video controls preload="metadata" playsinline>
+    <video controls preload="metadata" playsinline poster="poster.jpg">
       <source src="walkthrough.mp4" type="video/mp4">
     </video>
   </div>
@@ -202,7 +185,6 @@
   <p>This was built with no access to bunq's systems: public complaints as research, bunq's live app as the design system, and EU payment and AML law as the constraint set. It's what I'd do in the first ninety days inside, shown from outside first. If it's wrong in places only an insider could know, that's the conversation I'd like to have.</p>
   <p>I'm a UX designer and researcher specialising in accessible, explainable financial experiences. Previously: GDS-standard government services at MHCLG, published at CHI 2024, and Ledgerline, an explainable SME credit underwriting sandbox.</p>
   <div class="links">
-    <a class="btn" href="prototype.html">Open the prototype</a>
     <a class="btn ghost" href="https://madeforhumans.tech">madeforhumans.tech</a>
     <a class="btn ghost" href="mailto:ishwaryasuresh97@gmail.com">Email</a>
   </div>
