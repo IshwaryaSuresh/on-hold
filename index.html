@@ -30,10 +30,10 @@
   a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
   .wrap{max-width:720px;margin:0 auto;padding:0 24px}
   .wide{max-width:1040px;margin:0 auto;padding:0 24px}
-  header{padding:64px 0 32px}
+  header{padding:44px 0 22px}
   .kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);font-weight:500;margin-bottom:18px}
-  h1{font-size:clamp(36px,6vw,56px);line-height:1.06;letter-spacing:-.025em;font-weight:700;text-wrap:balance;margin-bottom:22px}
-  .lede{font-size:21px;line-height:1.5;color:var(--tx2);max-width:640px}
+  h1{font-size:clamp(34px,5.5vw,52px);line-height:1.06;letter-spacing:-.025em;font-weight:700;text-wrap:balance;margin-bottom:14px}
+  .lede{font-size:19px;line-height:1.5;color:var(--tx2);max-width:640px;margin-bottom:8px}
   .lede b{color:var(--tx);font-weight:500}
   .meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;font-size:14px;color:var(--tx3)}
   .meta span b{color:var(--tx2);font-weight:500}
@@ -44,6 +44,13 @@
   p{margin-bottom:16px;max-width:65ch}
   p:last-child{margin-bottom:0}
   video{display:block;width:100%;border-radius:20px;background:#000;margin-top:24px}
+  .vcap{font-size:15px;color:var(--tx2);margin:14px 0 0;max-width:none}
+  .full summary{cursor:pointer;list-style:none;font-size:16px;color:var(--tx);padding:16px 20px;border:1px solid var(--line);border-radius:14px;background:var(--surface);line-height:1.5}
+  .full summary::-webkit-details-marker{display:none}
+  .full summary::before{content:"▶";display:inline-block;font-size:11px;margin-right:12px;color:var(--blue);transition:transform .15s}
+  .full[open] summary::before{transform:rotate(90deg)}
+  .full summary:hover{border-color:var(--blue)}
+  .full video{margin-top:16px}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 8px}
   .stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px}
   .stat .n{font-size:34px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
@@ -98,21 +105,27 @@
 <body>
 
 <header class="wrap">
-  <div class="kicker">Spec redesign · not affiliated with bunq</div>
   <h1>On Hold: designing the moment neobanks lose trust</h1>
-  <p class="lede">Every neobank freezes accounts. The law requires it. What no bank has designed is <b>everything around the freeze</b>: what the person is told, when, and what still works. This is a working redesign of that experience, built in bunq's own design language, from 74 public complaints, and walked through screen by screen below.</p>
-  <div class="meta"><span><b>Narrated walkthrough</b> below, 4:30</span><span><b>Evidence:</b> 74 coded complaints</span><span><b>Built</b> in bunq’s own design language</span></div>
+  <div class="kicker" style="margin:0 0 20px">Spec redesign · not affiliated with bunq</div>
+  <p class="lede">Every neobank freezes accounts; the law requires it. What no bank has designed is <b>everything around the freeze</b>. This is that redesign, built in bunq's own design language from 74 public complaints.</p>
 </header>
 
-<section id="video">
-  <div class="wrap">
-    <h2>Watch it, start to finish, in four and a half minutes</h2>
-    <p>Why the problem exists, the journey tapped through screen by screen, what happens when the law extends a hold, and the architecture underneath it all.</p>
-  </div>
+<section id="video" style="padding-top:8px">
   <div class="wide">
-    <video controls preload="metadata" playsinline poster="poster.jpg">
-      <source src="walkthrough.mp4" type="video/mp4">
+    <video controls preload="metadata" playsinline poster="poster-short.jpg" style="margin-top:0">
+      <source src="short.mp4" type="video/mp4">
     </video>
+  </div>
+  <div class="wrap">
+    <p class="vcap">One minute: the moment a payment stops, and everything that should happen next. Real taps on every screen.</p>
+  </div>
+  <div class="wide" style="margin-top:34px">
+    <details class="full">
+      <summary>Watch the full story, 4:30: why the problem exists, the whole journey including what happens when the law extends a hold, and the architecture underneath</summary>
+      <video controls preload="none" playsinline poster="poster.jpg">
+        <source src="walkthrough.mp4" type="video/mp4">
+      </video>
+    </details>
   </div>
 </section>
 
