@@ -39,11 +39,13 @@
   .pillnav .cta:hover{filter:brightness(1.06);color:#fff}
   @media (max-width:860px){ .pillnav .navlink{display:none} .pillnav{gap:16px} }
 
-  header.wrap{padding-top:150px;padding-bottom:30px;max-width:1360px}
+  header.darkhero{background:#0b0b0d;--paper:#0b0b0d;--ink:#f2f2f4;--muted:#a6a6ad;--faint:#7c7c85;--line:rgba(255,255,255,.14);color:var(--ink)}
+  .heroinner{max-width:1360px;margin:0 auto;padding:150px 32px 96px}
+  header.darkhero h1 em{color:#4fc3bb}
   .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:500}
   h1{font-family:var(--serif);font-weight:600;font-size:clamp(52px,8.6vw,124px);line-height:1.02;letter-spacing:-.018em;margin:22px 0 34px;text-wrap:balance}
   h1 em{font-style:normal;color:var(--teal)}
-  .lede{font-size:22px;line-height:1.6;color:var(--muted);max-width:940px}
+  .lede{font-size:22px;line-height:1.65;color:var(--muted);max-width:none}
 
   section{padding:84px 0}
   h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,3.6vw,44px);line-height:1.12;letter-spacing:-.01em;margin-bottom:18px;text-wrap:balance}
@@ -154,10 +156,12 @@
   </div>
 </nav>
 
-<header class="wrap">
+<header class="darkhero">
+  <div class="heroinner">
   <div class="kicker">A spec redesign for bunq · independent work, not affiliated</div>
   <h1>On Hold, the moment neobanks <em>lose trust.</em></h1>
   <p class="lede">Every neobank freezes accounts; the law requires it. What no bank has designed is everything around the freeze. This is that redesign, built in bunq's own design language from 74 public complaints.</p>
+  </div>
 </header>
 
 <section id="film" class="film">
