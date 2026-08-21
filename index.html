@@ -39,18 +39,18 @@
   .pillnav .cta:hover{filter:brightness(1.06);color:#fff}
   @media (max-width:860px){ .pillnav .navlink{display:none} .pillnav{gap:16px} }
 
-  header.wrap{padding-top:150px;padding-bottom:30px}
+  header.wrap{padding-top:150px;padding-bottom:30px;max-width:1360px}
   .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:500}
-  h1{font-family:var(--serif);font-weight:600;font-size:clamp(46px,7.4vw,92px);line-height:1.03;letter-spacing:-.015em;margin:20px 0 26px;text-wrap:balance;max-width:16ch}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(52px,8.6vw,124px);line-height:1.02;letter-spacing:-.018em;margin:22px 0 34px;text-wrap:balance}
   h1 em{font-style:normal;color:var(--teal)}
-  .lede{font-size:20px;line-height:1.6;color:var(--muted);max-width:560px}
+  .lede{font-size:22px;line-height:1.6;color:var(--muted);max-width:940px}
 
   section{padding:84px 0}
   h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,3.6vw,44px);line-height:1.12;letter-spacing:-.01em;margin-bottom:18px;text-wrap:balance}
   h3{font-size:18px;font-weight:700;margin:30px 0 8px}
   p{margin-bottom:16px;max-width:63ch}
   p:last-child{margin-bottom:0}
-  .secintro{color:var(--muted);font-size:18px;max-width:560px}
+  .secintro{color:var(--muted);font-size:18px;max-width:720px}
 
   .film video{display:block;width:100%;border-radius:14px;background:#000;margin-top:34px;box-shadow:0 24px 70px rgba(13,13,13,.14)}
   .filmnote{font-size:14px;color:var(--faint);margin-top:14px}
@@ -128,6 +128,16 @@
 
   footer{padding:44px 0 64px;font-size:13.5px;color:var(--faint)}
   footer p{max-width:none}
+
+  section.dark, section.dark.about{
+    background:#0b0b0d;
+    --paper:#0b0b0d; --ink:#f2f2f4; --muted:#a6a6ad; --faint:#7c7c85;
+    --wash:#1b1b1f; --line:rgba(255,255,255,.14);
+    color:var(--ink);
+  }
+  section.dark + section{border-top:0}
+  section.dark{border-top:0}
+  section.dark video{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 24px 70px rgba(0,0,0,.6)}
 </style>
 </head>
 <body>
@@ -150,7 +160,7 @@
   <p class="lede">Every neobank freezes accounts; the law requires it. What no bank has designed is everything around the freeze. This is that redesign, built in bunq's own design language from 74 public complaints.</p>
 </header>
 
-<section id="film" class="film">
+<section id="film" class="film dark">
   <div class="wrap">
     <h2>The film, four and a half minutes.</h2>
     <p class="secintro">Why the problem exists, the journey tapped through screen by screen, what happens when the law extends a hold, and the architecture underneath.</p>
@@ -322,7 +332,7 @@
   </div>
 </section>
 
-<section id="design">
+<section id="design" class="dark">
   <div class="wrap">
     <h2>Five components, one rule: never leave the person in the dark.</h2>
     <ol class="complist">
@@ -365,7 +375,7 @@
   </div>
 </section>
 
-<section id="about" class="about">
+<section id="about" class="about dark">
   <div class="wrap">
     <h2>Made from the outside, on purpose.</h2>
     <p class="narrow" style="color:var(--muted)">This was built with no access to bunq's systems: public complaints as research, bunq's live app as the design system, and EU payment and AML law as the constraint set. It's what I'd do in the first ninety days inside, shown from outside first. If it's wrong in places only an insider could know, that's the conversation I'd like to have.</p>
