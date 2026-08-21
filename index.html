@@ -62,7 +62,6 @@
   .ptexts{position:relative;grid-column:1;min-height:340px}
   .ptext{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(22px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
   .ptext.on{opacity:1;transform:none}
-  .pnum{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--teal);margin-bottom:12px}
   .ptext h3{font-family:var(--serif);font-weight:600;font-size:clamp(28px,2.9vw,40px);line-height:1.12;margin:0 0 14px;color:var(--ink);text-wrap:balance}
   .ptext p{color:var(--muted);font-size:17.5px;line-height:1.7;max-width:44ch}
   .pphone{position:relative;width:100%;aspect-ratio:1/2;align-self:center}
@@ -74,7 +73,6 @@
   @media (prefers-reduced-motion: reduce){ .ptext,.pphone img,.rail i{transition:none} .ptext{transform:none} }
   .mobilesteps{display:none}
   .step{padding:48px 0;border-top:1px solid var(--line)}
-  .stepnum{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--teal);margin-bottom:10px}
   .step h3{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.15;margin:0 0 12px}
   .step p{color:var(--muted);font-size:17px;max-width:44ch}
   .step img.inline{display:block;width:min(320px,80%);margin:28px auto 0;border-radius:26px;box-shadow:0 18px 50px rgba(13,13,13,.2);background:#0b0b0d;aspect-ratio:1/2}
@@ -185,47 +183,38 @@
     <div class="pinstage">
       <div class="ptexts">
         <div class="ptext on">
-          <div class="pnum">01</div>
           <h3>An ordinary day</h3>
           <p>Home looks completely normal. One quiet badge says the account is being checked. The user hasn't noticed yet.</p>
         </div>
         <div class="ptext">
-          <div class="pnum">02</div>
           <h3>Pay a friend</h3>
           <p>€400 to Amara, like any other day. Contact, amount, send.</p>
         </div>
         <div class="ptext">
-          <div class="pnum">03</div>
           <h3>The worst moment, answered</h3>
           <p>The payment stops. Instead of a dead decline, the app says what's paused, why, and when it ends. In the complaint record, this exact moment is where trust dies.</p>
         </div>
         <div class="ptext">
-          <div class="pnum">04</div>
           <h3>One screen owns the case</h3>
           <p>Step 1 of 3: send us your papers. A daily update lands even when nothing changed. Plain words, no banking jargon anywhere.</p>
         </div>
         <div class="ptext">
-          <div class="pnum">05</div>
           <h3>Papers, one by one</h3>
           <p>Three documents matched to the user's life, added in any order. Every screen counts the same numbers, because one case state drives them all. The app can never contradict itself.</p>
         </div>
         <div class="ptext">
-          <div class="pnum">06</div>
           <h3>The check starts itself</h3>
           <p>The last paper lands and step 2 begins on its own. The bank commits to its own deadline, on screen: it finishes its part by Friday, 17:00.</p>
         </div>
         <div class="ptext">
-          <div class="pnum">07</div>
           <h3>Deadlines with consequences</h3>
           <p>If the bank misses its own deadline, the make-good fires automatically: a higher daily card limit, the case first in line, the miss shown right there. No calls, no begging.</p>
         </div>
         <div class="ptext">
-          <div class="pnum">08</div>
           <h3>When the law adds a wait</h3>
           <p>Sometimes an outside authority gets its own legal days to look. The bank can't release money and can't say why, so it says exactly that, with their deadline shown too.</p>
         </div>
         <div class="ptext">
-          <div class="pnum">09</div>
           <h3>The ending, designed</h3>
           <p>All clear, said out loud. Limits lift on their own, the badge disappears, and the €400 that opened this story goes through.</p>
         </div>
@@ -257,55 +246,46 @@
 
   <div class="wrap mobilesteps">
         <div class="step">
-          <div class="stepnum">01</div>
           <h3>An ordinary day</h3>
           <p>Home looks completely normal. One quiet badge says the account is being checked. The user hasn't noticed yet.</p>
           <img class="inline" src="steps/step-1.png" alt="An ordinary day" loading="lazy">
         </div>
         <div class="step">
-          <div class="stepnum">02</div>
           <h3>Pay a friend</h3>
           <p>€400 to Amara, like any other day. Contact, amount, send.</p>
           <img class="inline" src="steps/step-2.png" alt="Pay a friend" loading="lazy">
         </div>
         <div class="step">
-          <div class="stepnum">03</div>
           <h3>The worst moment, answered</h3>
           <p>The payment stops. Instead of a dead decline, the app says what's paused, why, and when it ends. In the complaint record, this exact moment is where trust dies.</p>
           <img class="inline" src="steps/step-3.png" alt="The worst moment, answered" loading="lazy">
         </div>
         <div class="step">
-          <div class="stepnum">04</div>
           <h3>One screen owns the case</h3>
           <p>Step 1 of 3: send us your papers. A daily update lands even when nothing changed. Plain words, no banking jargon anywhere.</p>
           <img class="inline" src="steps/step-4.png" alt="One screen owns the case" loading="lazy">
         </div>
         <div class="step">
-          <div class="stepnum">05</div>
           <h3>Papers, one by one</h3>
           <p>Three documents matched to the user's life, added in any order. Every screen counts the same numbers, because one case state drives them all. The app can never contradict itself.</p>
           <img class="inline" src="steps/step-5.png" alt="Papers, one by one" loading="lazy">
         </div>
         <div class="step">
-          <div class="stepnum">06</div>
           <h3>The check starts itself</h3>
           <p>The last paper lands and step 2 begins on its own. The bank commits to its own deadline, on screen: it finishes its part by Friday, 17:00.</p>
           <img class="inline" src="steps/step-6.png" alt="The check starts itself" loading="lazy">
         </div>
         <div class="step">
-          <div class="stepnum">07</div>
           <h3>Deadlines with consequences</h3>
           <p>If the bank misses its own deadline, the make-good fires automatically: a higher daily card limit, the case first in line, the miss shown right there. No calls, no begging.</p>
           <img class="inline" src="steps/step-7.png" alt="Deadlines with consequences" loading="lazy">
         </div>
         <div class="step">
-          <div class="stepnum">08</div>
           <h3>When the law adds a wait</h3>
           <p>Sometimes an outside authority gets its own legal days to look. The bank can't release money and can't say why, so it says exactly that, with their deadline shown too.</p>
           <img class="inline" src="steps/step-8.png" alt="When the law adds a wait" loading="lazy">
         </div>
         <div class="step">
-          <div class="stepnum">09</div>
           <h3>The ending, designed</h3>
           <p>All clear, said out loud. Limits lift on their own, the badge disappears, and the €400 that opened this story goes through.</p>
           <img class="inline" src="steps/step-9.png" alt="The ending, designed" loading="lazy">
