@@ -93,12 +93,35 @@
   .quote{font-family:var(--serif);font-weight:500;font-size:clamp(21px,2.4vw,27px);line-height:1.5;margin:44px 0 0;padding-left:26px;border-left:2px solid var(--teal)}
   .quote small{display:block;font-family:var(--sans);font-size:14px;color:var(--faint);margin-top:14px;font-weight:400}
 
-  .complist{list-style:none;padding:0;margin:30px 0 0}
-  .complist li{display:grid;grid-template-columns:64px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
-  .complist li:last-child{border-bottom:1px solid var(--line)}
-  .complist .cn{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--teal);padding-top:2px}
-  .complist h3{margin:0 0 6px;font-size:18px}
-  .complist p{margin:0;color:var(--muted);font-size:16px}
+  .svchead{display:grid;grid-template-columns:1fr 340px;gap:48px;align-items:start}
+  .svchead h2{margin-bottom:8px}
+  .svchead h2 em{font-style:normal;color:#4fc3bb}
+  .svcnote{font-size:15px;color:var(--muted);text-align:right;margin:10px 0 0}
+  .svc{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,1fr);gap:96px;margin-top:44px;align-items:start}
+  .svcitem{border-top:1px solid var(--line);padding:26px 0;cursor:pointer}
+  .svclist .svcitem:last-child{border-bottom:1px solid var(--line)}
+  .svcitem:focus-visible{outline:2px solid var(--teal);outline-offset:4px}
+  .svcname{font-family:var(--serif);font-weight:500;font-size:clamp(30px,3.2vw,44px);line-height:1.15;color:var(--faint);display:flex;justify-content:space-between;align-items:center;gap:20px;transition:color .2s}
+  .svcitem:hover .svcname{color:var(--muted)}
+  .svcitem.on .svcname{color:var(--ink)}
+  .svcarrow{font-size:.55em;color:#4fc3bb;opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .2s}
+  .svcitem.on .svcarrow{opacity:1;transform:none}
+  .svcitem .svcdetail{display:none}
+  .svcpanel .svcdetail p{font-size:17px;color:var(--ink);line-height:1.7;margin-bottom:22px}
+  .svckeys{list-style:none;padding:0;margin:0}
+  .svckeys li{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:13px 0;border-top:1px solid var(--line)}
+  .svckeys li:last-child{border-bottom:1px solid var(--line)}
+  @media (max-width:900px){
+    .svchead{grid-template-columns:1fr}
+    .svcnote{text-align:left;margin:0}
+    .svc{grid-template-columns:1fr;gap:0}
+    .svcpanel{display:none}
+    .svcitem{cursor:default}
+    .svcitem .svcdetail{display:block;margin-top:14px}
+    .svcitem .svcdetail p{color:var(--muted);font-size:16px}
+    .svcname{color:var(--ink)}
+    .svcarrow{display:none}
+  }
 
   .ia{margin:44px 0 8px;display:flex;flex-direction:column;align-items:center}
   .ia .box{border:1.5px solid var(--ink);border-radius:10px;padding:11px 30px;font-size:15.5px;font-weight:600;text-align:center;background:var(--paper)}
@@ -316,17 +339,88 @@
   </div>
 </section>
 
-<section id="design">
+<section id="design" class="dark">
   <div class="wrap">
-    <h2>Five components, one rule: never leave the person in the dark.</h2>
-    <ol class="complist">
-      <li><span class="cn">01</span><div><h3>A stepped case view</h3><p>One screen owns the case: which of three steps you're on, what to do, and when the next update comes. A daily update lands even when nothing changed.</p></div></li>
-      <li><span class="cn">02</span><div><h3>Profile-aware documents</h3><p>Checklists matched to the user's life. Freelancers aren't asked for payslips. If a paper is impossible, a person reviews the alternative.</p></div></li>
-      <li><span class="cn">03</span><div><h3>The transparency pattern</h3><p>What we can tell you, and the one thing the law says we can't. Restricted information reads as regulation, not evasion.</p></div></li>
-      <li><span class="cn">04</span><div><h3>Deadlines with consequences</h3><p>The bank sets its own deadline and shows it. Miss it, and the make-good fires automatically: bank-set limits relax, the case jumps the queue, the miss is on screen.</p></div></li>
-      <li><span class="cn">05</span><div><h3>Partial access by design</h3><p>A review pauses the risk, not the whole life. What still works is spelled out, and limits lift on their own as stages complete. No bank words anywhere: "we're checking your account" is the whole vocabulary.</p></div></li>
-    </ol>
-    <h3 style="margin-top:48px">The architecture, five boxes</h3>
+    <div class="svchead">
+      <h2>Five components, <em>one rule.</em></h2>
+      <p class="svcnote">Never leave the person in the dark. Every component exists to answer a silence the complaint record documents.</p>
+    </div>
+    <div class="svc">
+      <div class="svclist">
+        <div class="svcitem on" role="button" tabindex="0" data-i="0">
+          <span class="svcname">A stepped case view<span class="svcarrow" aria-hidden="true">→</span></span>
+          <div class="svcdetail">
+            <p>One screen owns the case: which of three steps you're on, what to do, and when the next update comes. A daily update lands even when nothing changed.</p>
+            <ul class="svckeys">
+            <li>Three steps, one screen</li>
+            <li>Daily update, even on no news</li>
+            <li>Next update, timestamped</li>
+            <li>Plain words only</li>
+            </ul>
+          </div>
+        </div>
+        <div class="svcitem" role="button" tabindex="0" data-i="1">
+          <span class="svcname">Profile-aware documents<span class="svcarrow" aria-hidden="true">→</span></span>
+          <div class="svcdetail">
+            <p>Checklists matched to the user's life. Freelancers aren't asked for payslips. If a paper is impossible, a person reviews the alternative.</p>
+            <ul class="svckeys">
+            <li>Matched to real lives</li>
+            <li>No payslips for freelancers</li>
+            <li>Impossible-paper escape hatch</li>
+            <li>Human review, GDPR art. 22</li>
+            </ul>
+          </div>
+        </div>
+        <div class="svcitem" role="button" tabindex="0" data-i="2">
+          <span class="svcname">The transparency pattern<span class="svcarrow" aria-hidden="true">→</span></span>
+          <div class="svcdetail">
+            <p>What we can tell you, and the one thing the law says we can't. Restricted information reads as regulation, not evasion.</p>
+            <ul class="svckeys">
+            <li>What we can tell you</li>
+            <li>The one thing we can't</li>
+            <li>Tipping-off, explained</li>
+            <li>Regulation, not evasion</li>
+            </ul>
+          </div>
+        </div>
+        <div class="svcitem" role="button" tabindex="0" data-i="3">
+          <span class="svcname">Deadlines with consequences<span class="svcarrow" aria-hidden="true">→</span></span>
+          <div class="svcdetail">
+            <p>The bank sets its own deadline and shows it. Miss it, and the make-good fires automatically: bank-set limits relax, the case jumps the queue, the miss is on screen.</p>
+            <ul class="svckeys">
+            <li>Bank-set deadline, on screen</li>
+            <li>Automatic make-goods</li>
+            <li>The case jumps the queue</li>
+            <li>Frozen funds never touched</li>
+            </ul>
+          </div>
+        </div>
+        <div class="svcitem" role="button" tabindex="0" data-i="4">
+          <span class="svcname">Partial access by design<span class="svcarrow" aria-hidden="true">→</span></span>
+          <div class="svcdetail">
+            <p>A review pauses the risk, not the whole life. What still works is spelled out, and limits lift on their own as stages complete. “We're checking your account” is the whole vocabulary.</p>
+            <ul class="svckeys">
+            <li>Freeze the risk, not the life</li>
+            <li>What still works, spelled out</li>
+            <li>Limits lift on their own</li>
+            <li>No bank words anywhere</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="svcpanel" aria-live="polite">
+          <div class="svcdetail">
+            <p>One screen owns the case: which of three steps you're on, what to do, and when the next update comes. A daily update lands even when nothing changed.</p>
+            <ul class="svckeys">
+            <li>Three steps, one screen</li>
+            <li>Daily update, even on no news</li>
+            <li>Next update, timestamped</li>
+            <li>Plain words only</li>
+            </ul>
+          </div>
+      </div>
+    </div>
+    <h3 style="margin-top:64px">The architecture, five boxes</h3>
     <p class="narrow" style="color:var(--muted)">One door in, one hub, four rooms. Nothing is more than one tap from the hub, and each room answers exactly one question a worried person asks, in the order they ask it.</p>
     <div class="ia">
       <div class="box">Home</div>
@@ -345,7 +439,7 @@
   </div>
 </section>
 
-<section id="law" class="dark">
+<section id="law">
   <div class="wrap">
     <h2>None of this bends a rule.</h2>
     <p class="secintro">Most of it moves the bank closer to the rules it already has.</p>
@@ -402,6 +496,20 @@
     window.addEventListener('scroll', onScroll, {passive:true});
     window.addEventListener('resize', onScroll);
     pick();
+  })();
+  (function(){
+    var items=[].slice.call(document.querySelectorAll('.svcitem'));
+    var panel=document.querySelector('.svcpanel');
+    if(!items.length||!panel) return;
+    function activate(it){
+      items.forEach(function(o){ o.classList.toggle('on', o===it); });
+      panel.innerHTML=it.querySelector('.svcdetail').outerHTML;
+    }
+    items.forEach(function(it){
+      it.addEventListener('mouseenter', function(){ activate(it); });
+      it.addEventListener('click', function(){ activate(it); });
+      it.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); activate(it); } });
+    });
   })();
 </script>
 
