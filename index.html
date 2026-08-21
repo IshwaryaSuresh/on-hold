@@ -4,208 +4,333 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>On Hold</title>
-<meta name="description" content="A spec redesign of the account review experience, built for bunq. A narrated walkthrough, evidence from 74 public complaints, and a five-screen architecture.">
-<meta property="og:title" content="On Hold: designing the moment neobanks lose trust">
-<meta property="og:description" content="A spec redesign of the account review experience, built for bunq. Watch the walkthrough.">
+<meta name="description" content="A spec redesign of the account review experience, built for bunq. A narrated film, the journey screen by screen, and the evidence behind it.">
+<meta property="og:title" content="On Hold, the moment neobanks lose trust">
+<meta property="og:description" content="A spec redesign of the account review experience, built for bunq.">
 <meta property="og:type" content="article">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0e0e11; --surface:#17171b; --inset:#222227; --line:rgba(255,255,255,.08);
-    --tx:#f2f2f4; --tx2:#9a9aa1; --tx3:#6b6b73;
-    --blue:#3b82f6; --blue-soft:rgba(59,130,246,.14); --green:#29cc88; --amber:#faaa00;
+    --paper:#fafafa; --ink:#0d0d0d; --muted:#54545b; --faint:#8b8b92;
+    --teal:#2e9c95; --teal-ink:#1f6d68; --wash:#f1f1f0; --line:rgba(13,13,13,.12);
+    --serif:"Source Serif 4", Georgia, serif;
+    --sans:"Schibsted Grotesk", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
-  @media (prefers-color-scheme: light){
-    :root:not([data-theme="dark"]){ --bg:#f6f6f8; --surface:#ffffff; --inset:#ededf1; --line:rgba(0,0,0,.08); --tx:#141418; --tx2:#5c5c66; --tx3:#8a8a94; --blue-soft:rgba(59,130,246,.10); }
-  }
-  :root[data-theme="light"]{ --bg:#f6f6f8; --surface:#ffffff; --inset:#ededf1; --line:rgba(0,0,0,.08); --tx:#141418; --tx2:#5c5c66; --tx3:#8a8a94; --blue-soft:rgba(59,130,246,.10); }
   *{box-sizing:border-box;margin:0}
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
-  body{background:var(--bg);color:var(--tx);font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
-  a{color:var(--blue);text-decoration:none}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--teal-ink);text-decoration:none}
   a:hover{text-decoration:underline}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
-  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
-  .wide{max-width:1040px;margin:0 auto;padding:0 24px}
-  header{padding:44px 0 22px}
-  .kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);font-weight:500;margin-bottom:18px}
-  h1{font-size:clamp(34px,5.5vw,52px);line-height:1.06;letter-spacing:-.025em;font-weight:700;text-wrap:balance;margin-bottom:14px}
-  .lede{font-size:19px;line-height:1.5;color:var(--tx2);max-width:640px;margin-bottom:8px}
-  .lede b{color:var(--tx);font-weight:500}
-  .meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;font-size:14px;color:var(--tx3)}
-  .meta span b{color:var(--tx2);font-weight:500}
-  section{padding:56px 0}
-  section+section{border-top:1px solid var(--line)}
-  h2{font-size:30px;line-height:1.2;letter-spacing:-.015em;font-weight:700;margin-bottom:18px;text-wrap:balance}
-  h3{font-size:19px;font-weight:700;margin:28px 0 8px}
-  p{margin-bottom:16px;max-width:65ch}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px}
+  .narrow{max-width:680px}
+
+  nav{position:fixed;top:18px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
+  .pillnav{pointer-events:auto;display:flex;align-items:center;gap:26px;background:rgba(250,250,250,.88);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:0 8px 30px rgba(13,13,13,.07);font-size:14.5px}
+  .pillnav .brand{font-weight:700;color:var(--ink)}
+  .pillnav a{color:var(--muted)}
+  .pillnav a:hover{color:var(--ink);text-decoration:none}
+  .pillnav .cta{background:var(--teal);color:#fff;font-weight:600;padding:9px 18px;border-radius:999px}
+  .pillnav .cta:hover{filter:brightness(1.06);color:#fff}
+  @media (max-width:860px){ .pillnav .navlink{display:none} .pillnav{gap:16px} }
+
+  header.wrap{padding-top:150px;padding-bottom:30px}
+  .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:500}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(46px,7.4vw,92px);line-height:1.03;letter-spacing:-.015em;margin:20px 0 26px;text-wrap:balance;max-width:16ch}
+  h1 em{font-style:normal;color:var(--teal)}
+  .lede{font-size:20px;line-height:1.6;color:var(--muted);max-width:560px}
+
+  section{padding:84px 0}
+  h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,3.6vw,44px);line-height:1.12;letter-spacing:-.01em;margin-bottom:18px;text-wrap:balance}
+  h3{font-size:18px;font-weight:700;margin:30px 0 8px}
+  p{margin-bottom:16px;max-width:63ch}
   p:last-child{margin-bottom:0}
-  video{display:block;width:100%;border-radius:20px;background:#000;margin-top:24px}
-  .vcap{font-size:15px;color:var(--tx2);margin:14px 0 0;max-width:none}
-  .full summary{cursor:pointer;list-style:none;font-size:16px;color:var(--tx);padding:16px 20px;border:1px solid var(--line);border-radius:14px;background:var(--surface);line-height:1.5}
-  .full summary::-webkit-details-marker{display:none}
-  .full summary::before{content:"▶";display:inline-block;font-size:11px;margin-right:12px;color:var(--blue);transition:transform .15s}
-  .full[open] summary::before{transform:rotate(90deg)}
-  .full summary:hover{border-color:var(--blue)}
-  .full video{margin-top:16px}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 8px}
-  .stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px}
-  .stat .n{font-size:34px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
-  .stat .l{font-size:14px;color:var(--tx2);margin-top:8px;line-height:1.4}
-  .bars{margin:24px 0 8px}
-  .bar{display:grid;grid-template-columns:230px 1fr 76px;align-items:center;gap:16px;margin-bottom:12px;font-size:15px}
-  .bar .lbl{color:var(--tx);font-weight:500;text-align:right}
-  .bar .trk{height:26px;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-  .bar .fill{height:100%;background:var(--blue);border-radius:7px}
-  .bar .num{color:var(--tx2);font-variant-numeric:tabular-nums;font-weight:500}
-  .quote{border-left:3px solid var(--blue);padding:6px 0 6px 22px;margin:26px 0;font-size:19px;line-height:1.55;color:var(--tx)}
-  .quote small{display:block;font-size:14px;color:var(--tx3);margin-top:10px}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
-  .card h3{margin:0 0 8px;font-size:17px}
-  .card p{font-size:15px;color:var(--tx2);margin:0}
-  .card .k{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:10px}
-  .ia{margin:26px 0 8px;display:flex;flex-direction:column;align-items:center}
-  .ia .box{border:1.5px solid var(--tx3);border-radius:10px;padding:10px 26px;font-size:15px;font-weight:600;text-align:center;background:var(--surface)}
-  .ia .box small{display:block;font-size:12.5px;color:var(--tx2);font-weight:400;margin-top:2px}
-  .ia .box.hub{border-color:var(--blue);background:var(--blue-soft)}
-  .ia .v{width:1.5px;height:22px;background:var(--tx3)}
-  .ia .h{width:min(620px,92%);height:1.5px;background:var(--tx3)}
-  .ia .drops{width:min(620px,92%);display:grid;grid-template-columns:repeat(4,1fr);justify-items:center}
-  .ia .drops i{display:block;width:1.5px;height:18px;background:var(--tx3)}
-  .ia .rooms{width:min(660px,96%);display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  .ia .rooms .box{padding:10px 6px;font-size:14px}
-  .legal{list-style:none;padding:0;margin:20px 0 0}
-  .legal li{padding:14px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:120px 1fr;gap:18px;font-size:16px}
-  .legal li:last-child{border-bottom:1px solid var(--line)}
-  .legal .law{color:var(--tx3);font-size:13px;letter-spacing:.04em;text-transform:uppercase;font-weight:500;padding-top:3px}
-  .legal p{margin:0;color:var(--tx2)}
-  .legal p b{color:var(--tx);font-weight:500}
-  .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-  .btn{display:inline-block;padding:11px 18px;border-radius:24px;background:var(--blue);color:#fff;font-weight:600;font-size:15px}
-  .btn:hover{text-decoration:none;filter:brightness(1.08)}
-  .btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--line)}
-  footer{padding:48px 0 72px;font-size:14px;color:var(--tx3);border-top:1px solid var(--line)}
-  footer p{max-width:none}
-  @media (max-width:760px){
-    .stats{grid-template-columns:1fr}
-    .grid2{grid-template-columns:1fr}
-    .bar{grid-template-columns:1fr;gap:6px}
-    .bar .lbl{text-align:left}
-    .legal li{grid-template-columns:1fr;gap:6px}
-    .ia .rooms{grid-template-columns:1fr 1fr}
-    .ia .drops{display:none}
-    .ia .h{display:none}
+  .secintro{color:var(--muted);font-size:18px;max-width:560px}
+
+  .film video{display:block;width:100%;border-radius:14px;background:#000;margin-top:34px;box-shadow:0 24px 70px rgba(13,13,13,.14)}
+  .filmnote{font-size:14px;color:var(--faint);margin-top:14px}
+
+  .scrolly{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:80px;align-items:start;margin-top:20px}
+  .stepcol{min-width:0}
+  .step{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:40px 0;border-top:1px solid var(--line)}
+  .step:first-child{border-top:0;min-height:60vh}
+  .stepnum{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--teal);margin-bottom:10px}
+  .step h3{font-family:var(--serif);font-weight:600;font-size:clamp(24px,2.6vw,32px);line-height:1.15;margin:0 0 12px}
+  .step p{color:var(--muted);font-size:17.5px;max-width:44ch}
+  .step img.inline{display:none}
+  .stickycol{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center}
+  .phoneframe{position:relative;width:min(380px,100%);aspect-ratio:1/2}
+  .phoneframe img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:34px;opacity:0;transition:opacity .28s ease;box-shadow:0 30px 80px rgba(13,13,13,.22)}
+  .phoneframe img.on{opacity:1}
+  @media (prefers-reduced-motion: reduce){ .phoneframe img{transition:none} }
+  @media (max-width:900px){
+    .scrolly{grid-template-columns:1fr;gap:0}
+    .stickycol{display:none}
+    .step{min-height:0;padding:48px 0}
+    .step img.inline{display:block;width:min(320px,80%);margin:28px auto 0;border-radius:26px;box-shadow:0 18px 50px rgba(13,13,13,.2)}
   }
+
+  .stats{display:flex;flex-wrap:wrap;gap:56px;margin:36px 0 10px}
+  .stat .n{font-family:var(--serif);font-weight:600;font-size:56px;line-height:1;letter-spacing:-.01em}
+  .stat .l{font-size:14.5px;color:var(--muted);margin-top:8px;max-width:200px;line-height:1.45}
+  .bars{margin:34px 0 6px;max-width:760px}
+  .bar{display:grid;grid-template-columns:250px 1fr 74px;align-items:center;gap:18px;margin-bottom:14px;font-size:15.5px}
+  .bar .lbl{font-weight:500;text-align:right}
+  .bar .trk{height:14px;background:var(--wash);border-radius:99px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--teal);border-radius:99px}
+  .bar .num{color:var(--faint);font-variant-numeric:tabular-nums}
+  @media (max-width:760px){ .bar{grid-template-columns:1fr;gap:6px} .bar .lbl{text-align:left} }
+  .quote{font-family:var(--serif);font-weight:500;font-size:clamp(21px,2.4vw,27px);line-height:1.5;max-width:26em;margin:44px 0 0;padding-left:26px;border-left:2px solid var(--teal)}
+  .quote small{display:block;font-family:var(--sans);font-size:14px;color:var(--faint);margin-top:14px;font-weight:400}
+
+  .complist{list-style:none;padding:0;margin:30px 0 0;max-width:760px}
+  .complist li{display:grid;grid-template-columns:64px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
+  .complist li:last-child{border-bottom:1px solid var(--line)}
+  .complist .cn{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--teal);padding-top:2px}
+  .complist h3{margin:0 0 6px;font-size:18px}
+  .complist p{margin:0;color:var(--muted);font-size:16px}
+
+  .ia{margin:44px 0 8px;display:flex;flex-direction:column;align-items:center}
+  .ia .box{border:1.5px solid var(--ink);border-radius:10px;padding:11px 30px;font-size:15.5px;font-weight:600;text-align:center;background:var(--paper)}
+  .ia .box small{display:block;font-size:12.5px;color:var(--muted);font-weight:400;margin-top:2px}
+  .ia .box.hub{border-color:var(--teal);background:rgba(46,156,149,.07)}
+  .ia .v{width:1.5px;height:24px;background:var(--faint)}
+  .ia .h{width:min(640px,92%);height:1.5px;background:var(--faint)}
+  .ia .drops{width:min(640px,92%);display:grid;grid-template-columns:repeat(4,1fr);justify-items:center}
+  .ia .drops i{display:block;width:1.5px;height:18px;background:var(--faint)}
+  .ia .rooms{width:min(700px,96%);display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .ia .rooms .box{padding:11px 6px;font-size:14.5px}
+  @media (max-width:760px){ .ia .rooms{grid-template-columns:1fr 1fr} .ia .drops,.ia .h{display:none} }
+
+  .legal{list-style:none;padding:0;margin:26px 0 0;max-width:760px}
+  .legal li{padding:18px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:130px 1fr;gap:20px;font-size:16px}
+  .legal li:last-child{border-bottom:1px solid var(--line)}
+  .legal .law{color:var(--faint);font-size:13px;letter-spacing:.05em;text-transform:uppercase;font-weight:500;padding-top:3px}
+  .legal p{margin:0;color:var(--muted)}
+  .legal p b{color:var(--ink);font-weight:600}
+  @media (max-width:760px){ .legal li{grid-template-columns:1fr;gap:6px} }
+
+  .about{background:var(--wash)}
+  .about .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+  .btn{display:inline-block;padding:12px 22px;border-radius:999px;background:var(--teal);color:#fff;font-weight:600;font-size:15px}
+  .btn:hover{text-decoration:none;filter:brightness(1.06)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+
+  footer{padding:44px 0 64px;font-size:13.5px;color:var(--faint)}
+  footer p{max-width:none}
 </style>
 </head>
 <body>
 
+<nav aria-label="Main">
+  <div class="pillnav">
+    <a class="brand" href="https://madeforhumans.tech">Ishwarya Suresh</a>
+    <a class="navlink" href="#film">Film</a>
+    <a class="navlink" href="#journey">Journey</a>
+    <a class="navlink" href="#evidence">Evidence</a>
+    <a class="navlink" href="#design">Design</a>
+    <a class="navlink" href="#law">Law</a>
+    <a class="cta" href="mailto:ishwaryasuresh97@gmail.com">Get in touch</a>
+  </div>
+</nav>
+
 <header class="wrap">
-  <h1>On Hold: designing the moment neobanks lose trust</h1>
-  <div class="kicker" style="margin:0 0 20px">Spec redesign · not affiliated with bunq</div>
-  <p class="lede">Every neobank freezes accounts; the law requires it. What no bank has designed is <b>everything around the freeze</b>. This is that redesign, built in bunq's own design language from 74 public complaints.</p>
+  <div class="kicker">A spec redesign for bunq · independent work, not affiliated</div>
+  <h1>On Hold, the moment neobanks <em>lose trust.</em></h1>
+  <p class="lede">Every neobank freezes accounts; the law requires it. What no bank has designed is everything around the freeze. This is that redesign, built in bunq's own design language from 74 public complaints.</p>
 </header>
 
-<section id="video" style="padding-top:8px">
-  <div class="wide">
-    <video controls preload="metadata" playsinline poster="poster-short.jpg" style="margin-top:0">
-      <source src="short.mp4" type="video/mp4">
-    </video>
-  </div>
+<section id="film" class="film">
   <div class="wrap">
-    <p class="vcap">One minute: the moment a payment stops, and everything that should happen next. Real taps on every screen.</p>
-  </div>
-  <div class="wide" style="margin-top:34px">
-    <details class="full">
-      <summary>Watch the full story, 4:30: why the problem exists, the whole journey including what happens when the law extends a hold, and the architecture underneath</summary>
-      <video controls preload="none" playsinline poster="poster.jpg">
-        <source src="walkthrough.mp4" type="video/mp4">
-      </video>
-    </details>
+    <h2>The film, four and a half minutes.</h2>
+    <p class="secintro">Why the problem exists, the journey tapped through screen by screen, what happens when the law extends a hold, and the architecture underneath.</p>
+    <video controls preload="metadata" playsinline poster="poster.jpg">
+      <source src="walkthrough.mp4" type="video/mp4">
+    </video>
+    <p class="filmnote">Narrated. Every tap in the film presses a real button on a working prototype.</p>
   </div>
 </section>
 
-<section id="why" class="wrap">
-  <div class="kicker">Why this problem</div>
-  <h2>The freeze isn't the failure. Everything around it is.</h2>
-  <p>European regulators have spent three years fining challenger banks for weak financial-crime controls, and the industry reflex is always the same: monitor harder, freeze faster, ask more questions. Over-control freezes legitimate users, and every wrongly frozen account becomes a one-star review, a forum thread, and a prospect who abandons signup before ordering a card.</p>
-  <div class="stats">
-    <div class="stat"><div class="n">£21m</div><div class="l">Monzo, FCA, July 2025</div></div>
-    <div class="stat"><div class="n">£29m</div><div class="l">Starling, FCA, 2024</div></div>
-    <div class="stat"><div class="n">€170k</div><div class="l">bunq, AFM, June 2026, for slow replies to fraud victims. Under appeal.</div></div>
-  </div>
-  <p>I coded 74 public complaints about frozen and blocked accounts, from Trustpilot, Dutch consumer platforms, forums, press coverage, and Kifid rulings. Five patterns dominate, and a complaint can carry more than one:</p>
-  <div class="bars">
-    <div class="bar"><div class="lbl">A faceless process</div><div class="trk"><div class="fill" style="width:100%"></div></div><div class="num">42 of 74</div></div>
-    <div class="bar"><div class="lbl">Sudden blocks, no reason</div><div class="trk"><div class="fill" style="width:71%"></div></div><div class="num">30 of 74</div></div>
-    <div class="bar"><div class="lbl">Broken time promises</div><div class="trk"><div class="fill" style="width:67%"></div></div><div class="num">28 of 74</div></div>
-    <div class="bar"><div class="lbl">Impossible document demands</div><div class="trk"><div class="fill" style="width:38%"></div></div><div class="num">16 of 74</div></div>
-    <div class="bar"><div class="lbl">Money held for months after</div><div class="trk"><div class="fill" style="width:21%"></div></div><div class="num">9 of 74</div></div>
-  </div>
-  <div class="quote">A customer moved €100,097 to his own account at another bank, for a house purchase. It was blocked for checks. He sent every paper promptly, got replies mostly from a chatbot, and waited ten days. He took out two short-term loans to save the purchase.<small>Kifid, the Dutch financial complaints institute, ruled the bank had been too slow and ordered compensation, 2024.</small></div>
-  <h3>Why this matters most to bunq</h3>
-  <p>bunq is built for people who live and work across borders. That is exactly the population whose financial lives look unusual to monitoring systems: income from several countries, irregular invoice patterns, transfers between their own accounts. bunq's best users are the ones most likely to get flagged. For bunq, the hold experience isn't an edge case. It's a core user journey wearing a support-ticket costume.</p>
-</section>
-
-<section id="design" class="wrap">
-  <div class="kicker">The redesign</div>
-  <h2>Five components, one rule: never leave the person in the dark</h2>
-  <div class="grid2">
-    <div class="card"><span class="k">1</span><h3>A stepped case view</h3><p>One screen owns the case: which of three steps you're on, what to do, and when the next update comes. A daily update lands even when nothing changed.</p></div>
-    <div class="card"><span class="k">2</span><h3>Profile-aware documents</h3><p>Checklists matched to the user's life. Freelancers aren't asked for payslips. If a paper is impossible, a person reviews the alternative.</p></div>
-    <div class="card"><span class="k">3</span><h3>The transparency pattern</h3><p>What we can tell you, and the one thing the law says we can't. Restricted information reads as regulation, not evasion.</p></div>
-    <div class="card"><span class="k">4</span><h3>Deadlines with consequences</h3><p>The bank sets its own deadline and shows it. Miss it, and the make-good fires automatically: bank-set limits relax, the case jumps the queue, the miss is on screen.</p></div>
-    <div class="card"><span class="k">5</span><h3>Partial access by design</h3><p>A review pauses the risk, not the whole life. What still works is spelled out, and limits lift on their own as stages complete.</p></div>
-    <div class="card"><span class="k">Voice</span><h3>No bank words</h3><p>Compliance, KYC, verification, and escalation never appear. "We're checking your account" is the whole vocabulary. Anyone can follow it.</p></div>
-  </div>
-  <h3>The architecture: five boxes</h3>
-  <p>One door in, one hub, four rooms. Nothing is more than one tap from the hub, and each room answers exactly one question a worried person asks, in the order they ask it.</p>
-  <div class="ia">
-    <div class="box">Home</div>
-    <div class="v"></div>
-    <div class="box hub">Case hub<small>we're checking your account</small></div>
-    <div class="v"></div>
-    <div class="h"></div>
-    <div class="drops"><i></i><i></i><i></i><i></i></div>
-    <div class="rooms">
-      <div class="box">Documents<small>what do you need from me?</small></div>
-      <div class="box">Why<small>did I do something wrong?</small></div>
-      <div class="box">Limits<small>can I still pay for things?</small></div>
-      <div class="box">Deadlines<small>when does this end?</small></div>
+<section id="journey">
+  <div class="wrap">
+    <h2>Or scroll it, screen by screen.</h2>
+    <p class="secintro">Nine moments, from an ordinary payment to everything back to normal.</p>
+    <div class="scrolly">
+      <div class="stepcol">
+        <div class="step" data-img="steps/step-1.png">
+          <div class="stepnum">01</div>
+          <h3>An ordinary day</h3>
+          <p>Home looks completely normal. One quiet badge says the account is being checked. The user hasn't noticed yet.</p>
+          <img class="inline" src="steps/step-1.png" alt="bunq-style home screen with a small amber badge reading Being checked on the Personal account" loading="lazy">
+        </div>
+        <div class="step" data-img="steps/step-2.png">
+          <div class="stepnum">02</div>
+          <h3>Pay a friend</h3>
+          <p>€400 to Amara, like any other day. Contact, amount, send.</p>
+          <img class="inline" src="steps/step-2.png" alt="Send money screen with Amara selected and 400 euros typed on the keypad" loading="lazy">
+        </div>
+        <div class="step" data-img="steps/step-3.png">
+          <div class="stepnum">03</div>
+          <h3>The worst moment, answered</h3>
+          <p>The payment stops. Instead of a dead decline, the app says what's paused, why, and when it ends. In the complaint record, this exact moment is where trust dies.</p>
+          <img class="inline" src="steps/step-3.png" alt="A sheet explaining the payment can't go yet, with the daily limit and when it returns to normal" loading="lazy">
+        </div>
+        <div class="step" data-img="steps/step-4.png">
+          <div class="stepnum">04</div>
+          <h3>One screen owns the case</h3>
+          <p>Step 1 of 3: send us your papers. A daily update lands even when nothing changed. Plain words, no banking jargon anywhere.</p>
+          <img class="inline" src="steps/step-4.png" alt="Case screen showing step 1 of 3, send us your papers, with the next update time" loading="lazy">
+        </div>
+        <div class="step" data-img="steps/step-5.png">
+          <div class="stepnum">05</div>
+          <h3>Papers, one by one</h3>
+          <p>Three documents matched to the user's life, added in any order. Every screen counts the same numbers, because one case state drives them all. The app can never contradict itself.</p>
+          <img class="inline" src="steps/step-5.png" alt="Documents screen with two papers done and one still to add" loading="lazy">
+        </div>
+        <div class="step" data-img="steps/step-6.png">
+          <div class="stepnum">06</div>
+          <h3>The check starts itself</h3>
+          <p>The last paper lands and step 2 begins on its own. The bank commits to its own deadline, on screen: it finishes its part by Friday, 17:00.</p>
+          <img class="inline" src="steps/step-6.png" alt="Case screen showing step 2 of 3, we're checking your papers, with the Friday deadline" loading="lazy">
+        </div>
+        <div class="step" data-img="steps/step-7.png">
+          <div class="stepnum">07</div>
+          <h3>Deadlines with consequences</h3>
+          <p>If the bank misses its own deadline, the make-good fires automatically: a higher daily card limit, the case first in line, the miss shown right there. No calls, no begging.</p>
+          <img class="inline" src="steps/step-7.png" alt="Deadline screen listing what happens automatically if the bank is late" loading="lazy">
+        </div>
+        <div class="step" data-img="steps/step-8.png">
+          <div class="stepnum">08</div>
+          <h3>When the law adds a wait</h3>
+          <p>Sometimes an outside authority gets its own legal days to look. The bank can't release money and can't say why, so it says exactly that, with their deadline shown too. Honesty about the process, even when the reason must stay sealed.</p>
+          <img class="inline" src="steps/step-8.png" alt="Case screen explaining the bank's part is done and an outside authority has until Wednesday" loading="lazy">
+        </div>
+        <div class="step" data-img="steps/step-9.png">
+          <div class="stepnum">09</div>
+          <h3>The ending, designed</h3>
+          <p>All clear, said out loud. Limits lift on their own, the badge disappears, and the €400 that opened this story goes through.</p>
+          <img class="inline" src="steps/step-9.png" alt="All clear screen with a green check, everything back to normal" loading="lazy">
+        </div>
+      </div>
+      <div class="stickycol" aria-hidden="true">
+        <div class="phoneframe" id="phoneframe">
+          <img src="steps/step-1.png" alt="" class="on">
+          <img src="steps/step-2.png" alt="">
+          <img src="steps/step-3.png" alt="">
+          <img src="steps/step-4.png" alt="">
+          <img src="steps/step-5.png" alt="">
+          <img src="steps/step-6.png" alt="">
+          <img src="steps/step-7.png" alt="">
+          <img src="steps/step-8.png" alt="">
+          <img src="steps/step-9.png" alt="">
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="law" class="wrap">
-  <div class="kicker">Where the law sits</div>
-  <h2>None of this bends a rule. Most of it moves the bank closer to the rules it already has.</h2>
-  <ul class="legal">
-    <li><span class="law">PSD2 art. 79</span><p><b>Explaining a stopped payment is required, not just allowed.</b> A payment provider must notify the user of a refusal and, where possible, the reasons, unless the law forbids it. A dead decline is closer to a breach than this design is.</p></li>
-    <li><span class="law">Tipping-off</span><p><b>The rules forbid revealing the trigger, a report, or an investigation.</b> They say nothing against showing the stage, the timeline, or the next update. Everything on the case screen is process, not reason.</p></li>
-    <li><span class="law">GDPR art. 22</span><p><b>The human escape hatch on the document checklist</b> is the right to human review of an automated decision with significant effects, in practice.</p></li>
-    <li><span class="law">AMLR 2024</span><p><b>Two carve-outs keep the deadline mechanic honest.</b> Deadlines are commitments to communicate, not to release: an outside authority can extend a hold, and the bank cannot release funds early however late it is. So make-goods only ever touch bank-set limits, never legally frozen money, and the app says so plainly.</p></li>
-  </ul>
-  <p style="margin-top:20px;color:var(--tx2)">Humans stay in the plumbing where the law already puts them. They're never sold as a feature, and the design never competes with automation: it gives the assistant something true to say.</p>
+<section id="evidence">
+  <div class="wrap">
+    <h2>The freeze isn't the failure. Everything around it is.</h2>
+    <p class="secintro">European regulators have spent three years fining challenger banks for weak financial-crime controls, and the reflex is always the same: monitor harder, freeze faster. Legitimate users get caught, and every wrongly frozen account becomes a one-star review and a lost signup.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">£21m</div><div class="l">Monzo, FCA, July 2025</div></div>
+      <div class="stat"><div class="n">£29m</div><div class="l">Starling, FCA, 2024</div></div>
+      <div class="stat"><div class="n">€170k</div><div class="l">bunq, AFM, June 2026, for slow replies to fraud victims. Under appeal.</div></div>
+    </div>
+    <p style="margin-top:26px">I coded 74 public complaints about frozen and blocked accounts, from Trustpilot, Dutch consumer platforms, forums, press coverage, and Kifid rulings. Five patterns dominate, and a complaint can carry more than one:</p>
+    <div class="bars">
+      <div class="bar"><div class="lbl">A faceless process</div><div class="trk"><div class="fill" style="width:100%"></div></div><div class="num">42 of 74</div></div>
+      <div class="bar"><div class="lbl">Sudden blocks, no reason</div><div class="trk"><div class="fill" style="width:71%"></div></div><div class="num">30 of 74</div></div>
+      <div class="bar"><div class="lbl">Broken time promises</div><div class="trk"><div class="fill" style="width:67%"></div></div><div class="num">28 of 74</div></div>
+      <div class="bar"><div class="lbl">Impossible document demands</div><div class="trk"><div class="fill" style="width:38%"></div></div><div class="num">16 of 74</div></div>
+      <div class="bar"><div class="lbl">Money held for months after</div><div class="trk"><div class="fill" style="width:21%"></div></div><div class="num">9 of 74</div></div>
+    </div>
+    <blockquote class="quote">A customer moved €100,097 to his own account at another bank, for a house purchase. It was blocked for checks. He sent every paper promptly, got replies mostly from a chatbot, and waited ten days. He took out two short-term loans to save the purchase.<small>Kifid, the Dutch financial complaints institute, ruled the bank had been too slow and ordered compensation, 2024.</small></blockquote>
+    <h3>Why this matters most to bunq</h3>
+    <p class="narrow" style="color:var(--muted)">bunq is built for people who live and work across borders, exactly the population whose financial lives look unusual to monitoring systems. bunq's best users are the ones most likely to get flagged. The hold experience isn't an edge case; it's a core user journey wearing a support-ticket costume.</p>
+  </div>
 </section>
 
-<section id="about" class="wrap">
-  <div class="kicker">About this work</div>
-  <h2>Made from the outside, on purpose</h2>
-  <p>This was built with no access to bunq's systems: public complaints as research, bunq's live app as the design system, and EU payment and AML law as the constraint set. It's what I'd do in the first ninety days inside, shown from outside first. If it's wrong in places only an insider could know, that's the conversation I'd like to have.</p>
-  <p>I'm a UX designer and researcher specialising in accessible, explainable financial experiences. Previously: GDS-standard government services at MHCLG, published at CHI 2024, and Ledgerline, an explainable SME credit underwriting sandbox.</p>
-  <div class="links">
-    <a class="btn ghost" href="https://madeforhumans.tech">madeforhumans.tech</a>
-    <a class="btn ghost" href="mailto:ishwaryasuresh97@gmail.com">Email</a>
+<section id="design">
+  <div class="wrap">
+    <h2>Five components, one rule: never leave the person in the dark.</h2>
+    <ol class="complist">
+      <li><span class="cn">01</span><div><h3>A stepped case view</h3><p>One screen owns the case: which of three steps you're on, what to do, and when the next update comes. A daily update lands even when nothing changed.</p></div></li>
+      <li><span class="cn">02</span><div><h3>Profile-aware documents</h3><p>Checklists matched to the user's life. Freelancers aren't asked for payslips. If a paper is impossible, a person reviews the alternative.</p></div></li>
+      <li><span class="cn">03</span><div><h3>The transparency pattern</h3><p>What we can tell you, and the one thing the law says we can't. Restricted information reads as regulation, not evasion.</p></div></li>
+      <li><span class="cn">04</span><div><h3>Deadlines with consequences</h3><p>The bank sets its own deadline and shows it. Miss it, and the make-good fires automatically: bank-set limits relax, the case jumps the queue, the miss is on screen.</p></div></li>
+      <li><span class="cn">05</span><div><h3>Partial access by design</h3><p>A review pauses the risk, not the whole life. What still works is spelled out, and limits lift on their own as stages complete. No bank words anywhere: "we're checking your account" is the whole vocabulary.</p></div></li>
+    </ol>
+    <h3 style="margin-top:48px">The architecture, five boxes</h3>
+    <p class="narrow" style="color:var(--muted)">One door in, one hub, four rooms. Nothing is more than one tap from the hub, and each room answers exactly one question a worried person asks, in the order they ask it.</p>
+    <div class="ia">
+      <div class="box">Home</div>
+      <div class="v"></div>
+      <div class="box hub">Case hub<small>we're checking your account</small></div>
+      <div class="v"></div>
+      <div class="h"></div>
+      <div class="drops"><i></i><i></i><i></i><i></i></div>
+      <div class="rooms">
+        <div class="box">Documents<small>what do you need from me?</small></div>
+        <div class="box">Why<small>did I do something wrong?</small></div>
+        <div class="box">Limits<small>can I still pay for things?</small></div>
+        <div class="box">Deadlines<small>when does this end?</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="law">
+  <div class="wrap">
+    <h2>None of this bends a rule.</h2>
+    <p class="secintro">Most of it moves the bank closer to the rules it already has.</p>
+    <ul class="legal">
+      <li><span class="law">PSD2 art. 79</span><p><b>Explaining a stopped payment is required, not just allowed.</b> A payment provider must notify the user of a refusal and, where possible, the reasons, unless the law forbids it. A dead decline is closer to a breach than this design is.</p></li>
+      <li><span class="law">Tipping-off</span><p><b>The rules forbid revealing the trigger, a report, or an investigation.</b> They say nothing against showing the stage, the timeline, or the next update. Everything on the case screen is process, not reason.</p></li>
+      <li><span class="law">GDPR art. 22</span><p><b>The human escape hatch on the document checklist</b> is the right to human review of an automated decision with significant effects, in practice.</p></li>
+      <li><span class="law">AMLR 2024</span><p><b>Two carve-outs keep the deadline mechanic honest.</b> Deadlines are commitments to communicate, not to release: an outside authority can extend a hold, and the bank cannot release funds early however late it is. So make-goods only ever touch bank-set limits, never legally frozen money, and the app says so plainly.</p></li>
+    </ul>
+    <p style="margin-top:22px;color:var(--muted);max-width:760px">Humans stay in the plumbing where the law already puts them. They're never sold as a feature, and the design never competes with automation: it gives the assistant something true to say.</p>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="wrap">
+    <h2>Made from the outside, on purpose.</h2>
+    <p class="narrow" style="color:var(--muted)">This was built with no access to bunq's systems: public complaints as research, bunq's live app as the design system, and EU payment and AML law as the constraint set. It's what I'd do in the first ninety days inside, shown from outside first. If it's wrong in places only an insider could know, that's the conversation I'd like to have.</p>
+    <p class="narrow" style="color:var(--muted)">I'm a UX designer and researcher specialising in accessible, explainable financial experiences. Previously: GDS-standard government services at MHCLG, published at CHI 2024, and Ledgerline, an explainable SME credit underwriting sandbox.</p>
+    <div class="links">
+      <a class="btn" href="mailto:ishwaryasuresh97@gmail.com">Get in touch</a>
+      <a class="btn ghost" href="https://madeforhumans.tech">madeforhumans.tech</a>
+    </div>
   </div>
 </section>
 
 <footer class="wrap">
   <p>An independent spec concept. Not affiliated with, endorsed by, or built for bunq B.V. bunq's name and design language are referenced to show how the concept would sit inside the real product. Complaint data is drawn from public sources and paraphrased; no customer is identified. Regulatory figures are as published by the FCA and AFM.</p>
 </footer>
+
+<script>
+  (function(){
+    var frame=document.getElementById('phoneframe');
+    if(!frame) return;
+    var imgs=[].slice.call(frame.querySelectorAll('img'));
+    var steps=[].slice.call(document.querySelectorAll('.step'));
+    function show(src){
+      imgs.forEach(function(im){ im.classList.toggle('on', im.getAttribute('src')===src); });
+    }
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting) show(e.target.getAttribute('data-img')); });
+      },{rootMargin:'-45% 0px -45% 0px', threshold:0});
+      steps.forEach(function(s){ io.observe(s); });
+    }
+  })();
+</script>
 
 </body>
 </html>
