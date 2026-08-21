@@ -52,23 +52,23 @@
   p:last-child{margin-bottom:0}
   .secintro{color:var(--muted);font-size:18px;max-width:720px}
 
-  .film video{display:block;width:100%;border-radius:14px;background:#000;margin-top:34px;box-shadow:0 24px 70px rgba(13,13,13,.14)}
+  .film video{display:block;width:100%;border-radius:14px;background:#000;margin-top:34px;box-shadow:0 0 0 1px rgba(13,13,13,.08),0 24px 70px rgba(13,13,13,.18)}
   .filmnote{font-size:14px;color:var(--faint);margin-top:14px}
 
-  .pintrack{position:relative;height:calc(9 * 88vh + 12vh);background:#0b0b0d;margin-top:44px}
+  .pintrack{position:relative;height:calc(9 * 88vh + 12vh);background:var(--paper);margin-top:24px}
   .pinstage{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:minmax(320px,1fr) minmax(340px,410px) 60px;gap:64px;align-items:center;max-width:1220px;margin:0 auto;padding:0 48px}
   .ptexts{position:relative;grid-column:1;min-height:340px}
   .ptext{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(22px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
   .ptext.on{opacity:1;transform:none}
   .pnum{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--teal);margin-bottom:12px}
-  .ptext h3{font-family:var(--serif);font-weight:600;font-size:clamp(28px,2.9vw,40px);line-height:1.12;margin:0 0 14px;color:#f2f2f4;text-wrap:balance}
-  .ptext p{color:#a6a6ad;font-size:17.5px;line-height:1.7;max-width:44ch}
+  .ptext h3{font-family:var(--serif);font-weight:600;font-size:clamp(28px,2.9vw,40px);line-height:1.12;margin:0 0 14px;color:var(--ink);text-wrap:balance}
+  .ptext p{color:var(--muted);font-size:17.5px;line-height:1.7;max-width:44ch}
   .pphone{position:relative;width:100%;aspect-ratio:1/2;align-self:center}
-  .pphone img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:34px;opacity:0;transition:opacity .35s ease;background:#0b0b0d;box-shadow:0 0 0 1px rgba(255,255,255,.09), 0 40px 100px rgba(0,0,0,.6)}
+  .pphone img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:34px;opacity:0;transition:opacity .35s ease;background:#0b0b0d;box-shadow:0 0 0 1px rgba(13,13,13,.08), 0 34px 90px rgba(13,13,13,.24)}
   .pphone img.on{opacity:1}
   .rail{display:flex;flex-direction:column;gap:13px;align-items:center;justify-self:end}
-  .rail i{width:6px;height:6px;border-radius:99px;background:#3a3a3e;transition:height .3s ease,background .3s ease}
-  .rail i.on{height:24px;background:#f2f2f4}
+  .rail i{width:6px;height:6px;border-radius:99px;background:#d8d8dc;transition:height .3s ease,background .3s ease}
+  .rail i.on{height:24px;background:var(--ink)}
   @media (prefers-reduced-motion: reduce){ .ptext,.pphone img,.rail i{transition:none} .ptext{transform:none} }
   .mobilesteps{display:none}
   .step{padding:48px 0;border-top:1px solid var(--line)}
@@ -160,7 +160,7 @@
   <p class="lede">Every neobank freezes accounts; the law requires it. What no bank has designed is everything around the freeze. This is that redesign, built in bunq's own design language from 74 public complaints.</p>
 </header>
 
-<section id="film" class="film dark">
+<section id="film" class="film">
   <div class="wrap">
     <h2>The film, four and a half minutes.</h2>
     <p class="secintro">Why the problem exists, the journey tapped through screen by screen, what happens when the law extends a hold, and the architecture underneath.</p>
@@ -309,7 +309,7 @@
   </div>
 </section>
 
-<section id="evidence">
+<section id="evidence" class="dark">
   <div class="wrap">
     <h2>The freeze isn't the failure. Everything around it is.</h2>
     <p class="secintro">European regulators have spent three years fining challenger banks for weak financial-crime controls, and the reflex is always the same: monitor harder, freeze faster. Legitimate users get caught, and every wrongly frozen account becomes a one-star review and a lost signup.</p>
@@ -332,7 +332,7 @@
   </div>
 </section>
 
-<section id="design" class="dark">
+<section id="design">
   <div class="wrap">
     <h2>Five components, one rule: never leave the person in the dark.</h2>
     <ol class="complist">
@@ -361,7 +361,7 @@
   </div>
 </section>
 
-<section id="law">
+<section id="law" class="dark">
   <div class="wrap">
     <h2>None of this bends a rule.</h2>
     <p class="secintro">Most of it moves the bank closer to the rules it already has.</p>
@@ -375,7 +375,7 @@
   </div>
 </section>
 
-<section id="about" class="about dark">
+<section id="about" class="about">
   <div class="wrap">
     <h2>Made from the outside, on purpose.</h2>
     <p class="narrow" style="color:var(--muted)">This was built with no access to bunq's systems: public complaints as research, bunq's live app as the design system, and EU payment and AML law as the constraint set. It's what I'd do in the first ninety days inside, shown from outside first. If it's wrong in places only an insider could know, that's the conversation I'd like to have.</p>
