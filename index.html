@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="steps/step-1.png">
 <link rel="preload" as="image" href="steps/step-2.png">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..700&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#fafafa; --ink:#0d0d0d; --muted:#54545b; --faint:#8b8b92;
@@ -31,7 +31,7 @@
   .narrow{max-width:none}
 
   nav{position:fixed;top:18px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
-  .pillnav{pointer-events:auto;display:flex;align-items:center;gap:26px;background:rgba(250,250,250,.88);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:0 8px 30px rgba(13,13,13,.07);font-size:14.5px}
+  .pillnav{pointer-events:auto;display:flex;align-items:center;gap:28px;background:#fff;border:1px solid rgba(13,13,13,.06);border-radius:999px;padding:12px 14px 12px 26px;box-shadow:0 10px 34px rgba(13,13,13,.10);font-size:16px}
   .pillnav .brand{font-weight:700;color:var(--ink)}
   .pillnav a{color:var(--muted)}
   .pillnav a:hover{color:var(--ink);text-decoration:none}
@@ -39,13 +39,17 @@
   .pillnav .cta:hover{filter:brightness(1.06);color:#fff}
   @media (max-width:860px){ .pillnav .navlink{display:none} .pillnav{gap:16px} }
 
-  header.darkhero{background:#0b0b0d;--paper:#0b0b0d;--ink:#f2f2f4;--muted:#a6a6ad;--faint:#7c7c85;--line:rgba(255,255,255,.14);color:var(--ink)}
+  header.darkhero{background:#0b0b0d;background-image:radial-gradient(rgba(255,255,255,.055) 1px, transparent 1px),radial-gradient(1100px 520px at 88% 0%, rgba(46,156,149,.12), transparent 70%),radial-gradient(900px 480px at 0% 100%, rgba(46,156,149,.10), transparent 70%);background-size:26px 26px,auto,auto;--paper:#0b0b0d;--ink:#f2f2f4;--muted:#a6a6ad;--faint:#7c7c85;--line:rgba(255,255,255,.14);color:var(--ink)}
   .heroinner{max-width:1360px;margin:0 auto;padding:150px 32px 96px}
   header.darkhero h1 em{color:#4fc3bb}
-  .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:500}
-  h1{font-family:var(--serif);font-weight:400;font-size:clamp(54px,8.8vw,140px);line-height:.97;letter-spacing:-.028em;margin:22px 0 34px;text-wrap:balance}
+  .caret{color:#4fc3bb;font-weight:300;margin-left:.06em;animation:blink 1.15s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media (prefers-reduced-motion: reduce){ .caret{animation:none} }
+  @media (max-width:760px){ .lede{columns:1} }
+  .kicker{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:500;margin-top:44px}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,8.6vw,168px);line-height:.94;letter-spacing:-.03em;margin:0 0 40px;text-wrap:balance}
   h1 em{font-style:normal;color:var(--teal)}
-  .lede{font-size:22px;line-height:1.65;color:var(--muted);max-width:none}
+  .lede{font-size:17px;line-height:1.7;color:#9a9aa1;columns:2;column-gap:64px;max-width:1100px}
 
   section{padding:84px 0}
   h2{font-family:var(--serif);font-weight:400;font-size:clamp(36px,4.4vw,58px);line-height:1.04;letter-spacing:-.02em;margin-bottom:20px;text-wrap:balance}
@@ -173,15 +177,15 @@
     <a class="navlink" href="#evidence">Evidence</a>
     <a class="navlink" href="#design">Design</a>
     <a class="navlink" href="#law">Law</a>
-    <a class="cta" href="mailto:ishwaryasuresh97@gmail.com">Get in touch</a>
+    <a class="cta" href="mailto:ishwaryasuresh97@gmail.com">Get in touch →</a>
   </div>
 </nav>
 
 <header class="darkhero">
   <div class="heroinner">
-  <div class="kicker">A spec redesign for bunq · independent work, not affiliated</div>
-  <h1>On Hold, the moment neobanks <em>lose trust.</em></h1>
+  <h1>On Hold, the moment neobanks <em>lose trust.</em><span class="caret" aria-hidden="true">|</span></h1>
   <p class="lede">Every neobank freezes accounts; the law requires it. What no bank has designed is everything around the freeze. This is that redesign, built in bunq's own design language from 74 public complaints.</p>
+  <div class="kicker">A spec redesign for bunq · independent work, not affiliated</div>
   </div>
 </header>
 
