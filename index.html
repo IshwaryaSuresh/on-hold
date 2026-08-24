@@ -45,11 +45,12 @@
   .caret{color:#4fc3bb;font-weight:300;margin-left:.06em;animation:blink 1.15s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
   @media (prefers-reduced-motion: reduce){ .caret{animation:none} }
-  @media (max-width:760px){ .lede{columns:1} }
+  @media (max-width:760px){ .herosub{grid-template-columns:1fr;gap:18px} }
   .kicker{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:500;margin-top:44px}
   h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,8.6vw,168px);line-height:.94;letter-spacing:-.03em;margin:0 0 40px;text-wrap:balance}
   h1 em{font-style:normal;color:var(--teal)}
-  .lede{font-size:17px;line-height:1.7;color:#9a9aa1;columns:2;column-gap:64px;max-width:1100px}
+  .herosub{display:grid;grid-template-columns:1fr 1fr;gap:64px;border-top:1px solid rgba(255,255,255,.14);padding-top:30px;max-width:1160px}
+  .herosub p{font-size:17px;line-height:1.7;color:#9a9aa1;margin:0;max-width:34em}
 
   section{padding:84px 0}
   h2{font-family:var(--serif);font-weight:400;font-size:clamp(36px,4.4vw,58px);line-height:1.04;letter-spacing:-.02em;margin-bottom:20px;text-wrap:balance}
@@ -184,7 +185,10 @@
 <header class="darkhero">
   <div class="heroinner">
   <h1>On Hold, the moment neobanks <em>lose trust.</em><span class="caret" aria-hidden="true">|</span></h1>
-  <p class="lede">Every neobank freezes accounts; the law requires it. What no bank has designed is everything around the freeze. This is that redesign, built in bunq's own design language from 74 public complaints.</p>
+  <div class="herosub">
+    <p>Every neobank freezes accounts; the law requires it. What no bank has ever designed is everything around the freeze: what the person is told, when, and what still works.</p>
+    <p>This is that redesign. Built from 74 public complaints, in bunq's own design language, inside the limits of EU banking law.</p>
+  </div>
   <div class="kicker">A spec redesign for bunq · independent work, not affiliated</div>
   </div>
 </header>
